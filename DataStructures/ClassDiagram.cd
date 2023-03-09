@@ -1,0 +1,1509 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ds::tests::RootTest" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\root.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestGetters" Collapsed="true">
+    <Position X="77.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestAllocate" Collapsed="true">
+    <Position X="86.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestAllocateAt" Collapsed="true">
+    <Position X="93.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIEAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestRelease" Collapsed="true">
+    <Position X="104.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestReleaseAt" Collapsed="true">
+    <Position X="115.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestReleasePtr" Collapsed="true">
+    <Position X="124.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestAssign" Collapsed="true">
+    <Position X="133.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestEquals" Collapsed="true">
+    <Position X="145" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestCalculateAddress" Collapsed="true">
+    <Position X="156.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTestCalculateIndex" Collapsed="true">
+    <Position X="167.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerSwap" Collapsed="true">
+    <Position X="174.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompactMemoryManagerTest" Collapsed="true">
+    <Position X="55" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\compact_memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MemoryManagerTestAllocate" Collapsed="true">
+    <Position X="190" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAACA=</HashCode>
+      <FileName>tests\mm\memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MemoryManagerTestRelease" Collapsed="true">
+    <Position X="196.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MemoryManagerTestCounts" Collapsed="true">
+    <Position X="68.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MemoryManagerTest" Collapsed="true">
+    <Position X="14.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\memory_manager.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MMTest" Collapsed="true">
+    <Position X="19" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\mm\mm.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ADTTest" Collapsed="true">
+    <Position X="25.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\adt.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ArraysTest" Collapsed="true">
+    <Position X="28" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>tests\adt\array.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ListTest" Collapsed="true">
+    <Position X="30.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>tests\adt\list.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::PriorityQueueTest" Collapsed="true">
+    <Position X="34.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\priority_queue.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::QueueTest" Collapsed="true">
+    <Position X="39.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\queue.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SortTest" Collapsed="true">
+    <Position X="41.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\sorts.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::StackTest" Collapsed="true">
+    <Position X="43.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\stack.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTableTest" Collapsed="true">
+    <Position X="46" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\table.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::NonSequenceTableTest" Collapsed="true">
+    <Position X="52.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\table.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::TableTest" Collapsed="true">
+    <Position X="57.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\table.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::TreeTest" Collapsed="true">
+    <Position X="59.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>tests\adt\tree.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::AMTTest" Collapsed="true">
+    <Position X="64" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>tests\amt\amt.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MWEHTestInsert" Collapsed="true">
+    <Position X="70.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MWEHTestAccess" Collapsed="true">
+    <Position X="79.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIACAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MWEHTestLevelsCountsDegs" Collapsed="true">
+    <Position X="88.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MWEHTestRemove" Collapsed="true">
+    <Position X="95.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MWEHTestCopyAssignEquals" Collapsed="true">
+    <Position X="106.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MWEHTestClear" Collapsed="true">
+    <Position X="118" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::MultiwayExplicitHierarchyTest" Collapsed="true">
+    <Position X="37" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::KWEHTestInsert" Collapsed="true">
+    <Position X="136" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAEAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::KWEHTestAccess" Collapsed="true">
+    <Position X="147.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::KWEHTestLevelCountDeg" Collapsed="true">
+    <Position X="158.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::KWEHTestRemove" Collapsed="true">
+    <Position X="169.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::KWEHTestCopyAssignEquals" Collapsed="true">
+    <Position X="176.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::KWEHTestClear" Collapsed="true">
+    <Position X="183.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::KWayExplicitHierarchyTest" Collapsed="true">
+    <Position X="61.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ExplicitHierarchyTest" Collapsed="true">
+    <Position X="66.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SinglyLinkedSequenceTest" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::DoubleLinkedSequenceTest" Collapsed="true">
+    <Position X="16.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ExplicitSequenceTest" Collapsed="true">
+    <Position X="21.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\explicit_sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::HierarchyTestProcessPreOrder" Collapsed="true">
+    <Position X="97.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAACAAAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::HierarchyTestProcessPostOrder" Collapsed="true">
+    <Position X="109" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::HierarchyTestProcessLevelOrder" Collapsed="true">
+    <Position X="120.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::HierarchyTestPreOrderIterator" Collapsed="true">
+    <Position X="127" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::HierarchyTestPostOrderIterator" Collapsed="true">
+    <Position X="138.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::BinaryHierarchyTestProcessInOrder" Collapsed="true">
+    <Position X="149.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::BinaryHierarchyTestInOrderIterator" Collapsed="true">
+    <Position X="160.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAgAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::HierarchyTest" Collapsed="true">
+    <Position X="48.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitHierarchyTestThrowing" Collapsed="true">
+    <Position X="178.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitHierarchyTestInsert" Collapsed="true">
+    <Position X="185.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitHierarchyTestAccess" Collapsed="true">
+    <Position X="192.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAQAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitHierarchyTestLevelsCountsDegs" Collapsed="true">
+    <Position X="199" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAEAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitHierarchyTestRemove" Collapsed="true">
+    <Position X="73" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitHierarchyTestCopyAssign" Collapsed="true">
+    <Position X="82" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitHierarchyTest" Collapsed="true">
+    <Position X="23.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_hierarchy.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitSequenceTestIndexOfRelative" Collapsed="true">
+    <Position X="100" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CyclicImplicitSequenceTestIndexOfRelative" Collapsed="true">
+    <Position X="111.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::ImplicitSequenceTest" Collapsed="true">
+    <Position X="32.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\implicit_sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestCalculateIndex&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="129.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAgAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestInsertEnds&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="140.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestInsertRandom&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="151.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestInsertBefore&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="163" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestInsertAfter&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="172" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestAccessEnds&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="181" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestAccessRandom&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="187.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestAccessPrevNext&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="194.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestRemoveEnds&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="201.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestRemoveRandom&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="75.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestRemoveNext&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="84.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestRemovePrevious&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="91" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestProcessForward&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="102.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestProcessBackward&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="113.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestFindWithProperty&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="122.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestFindPrevToWithProperty&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="131.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAgAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestIterators&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="142.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestClear&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="154" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAE=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::SequenceTestCopyAssignEquals&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="165.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::GenericSequenceTest&lt;SequenceT&gt;" Collapsed="true">
+    <Position X="50.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\amt\sequence.test.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::Console" Collapsed="true">
+    <Position X="205.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAACIAAAAQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\_details\console.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::LeafTest" Collapsed="true">
+    <Position X="134.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEgCEAQAAAQAEBAAABAAACIAIAAEYUAQSABAAAAI=</HashCode>
+      <FileName>tests\_details\test.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::CompositeTest" Collapsed="true">
+    <Position X="38" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIhCEAAAAABgABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\_details\test.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::TestOutputterVisitor" Collapsed="true">
+    <Position X="207.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAEAABAgAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>tests\_details\console_output.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::tests::Test" Collapsed="true">
+    <Position X="105.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgIEAAAAAAAABAAAAAAAAAAEAAAAAAAACAAAIAA=</HashCode>
+      <FileName>tests\_details\test.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::Analyzer">
+    <Position X="41.75" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAACIAAAACAgAAAAAAAAAAAAAAACAEAAAQIAA=</HashCode>
+      <FileName>complexities\complexity_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::CompositeAnalyzer">
+    <Position X="38.5" Y="14.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAACIIAAACAgAAAAAAAAAAAAAAAQAAAABQAAA=</HashCode>
+      <FileName>complexities\complexity_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::LeafAnalyzer">
+    <Position X="44.5" Y="14.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AASAgAAAACIAAAAAAgAAAAAIAEAgAAAQKAASASQQAAE=</HashCode>
+      <FileName>complexities\complexity_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::ComplexityAnalyzer&lt;Structure&gt;">
+    <Position X="44.5" Y="20.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAACABAAgAAAAAAAAAAAAAAgg=</HashCode>
+      <FileName>complexities\complexity_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::ListAnalyzer&lt;List&gt;">
+    <Position X="45" Y="24" Width="1.75" />
+    <InheritanceLine Type="ds::utils::ComplexityAnalyzer&lt;Structure&gt;" FixedToPoint="true">
+      <Path>
+        <Point X="45.75" Y="23.396" />
+        <Point X="45.75" Y="24" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAKAAAAAAAAAAAAAAABABAAQAAAEAIBAAAAABAAA=</HashCode>
+      <FileName>complexities\list_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::ListInsertAnalyzer&lt;List&gt;">
+    <Position X="43" Y="28.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>complexities\list_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::ListRemoveAnalyzer&lt;List&gt;">
+    <Position X="47.25" Y="28.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>complexities\list_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::utils::ListsAnalyzer">
+    <Position X="38.75" Y="20.5" Width="1.5" />
+    <InheritanceLine Type="ds::utils::CompositeAnalyzer" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="39.375" Y="17.531" />
+        <Point X="39.375" Y="20.376" />
+        <Point X="39.375" Y="20.376" />
+        <Point X="39.375" Y="20.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>complexities\list_analyzer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::mm::CompactMemoryManager&lt;BlockType&gt;" Collapsed="true">
+    <Position X="15.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQMAAAAAICEJiAAIIIBAAQAAAEAAAAAAQAAIAgAAAY=</HashCode>
+      <FileName>libds\mm\compact_memory_manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::mm::MemoryManager&lt;BlockType&gt;" Collapsed="true">
+    <Position X="15.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAEAAAAAgAAAAAAAIAAAAgAAAQAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>libds\mm\memory_manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::mm::PtrPrint&lt;DataType&gt;" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\mm\memory_omanip.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::mm::PtrPrintBin&lt;DataType&gt;" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\mm\memory_omanip.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::unavailable_function_call" Collapsed="true">
+    <Position X="209" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAACA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::AbstractMemoryType" Collapsed="true">
+    <Position X="210.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAACEAAAAAIAAAAAAIAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::AbstractMemoryStructure&lt;BlockType&gt;" Collapsed="true">
+    <Position X="209" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAIAAAAAAAAAAAAMAAAAAAAAAQAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ImplicitAbstractMemoryStructure&lt;DataType&gt;" Collapsed="true">
+    <Position X="207.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEIAAAAAACEAAAAIAAAAAAAABAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ExplicitAbstractMemoryStructure&lt;BlockType&gt;" Collapsed="true">
+    <Position X="205.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::Iterator&lt;BlockType&gt;" Collapsed="true">
+    <Position X="13" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAIAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ForwardIterator&lt;BlockType&gt;" Collapsed="true">
+    <Position X="15.25" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::BidirectionalIterator&lt;BlockType&gt;" Collapsed="true">
+    <Position X="15.25" Y="24.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::RandomAccessIterator&lt;BlockType&gt;" Collapsed="true">
+    <Position X="15.25" Y="25.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::CompactMemoryIterator&lt;BlockType&gt;" Collapsed="true">
+    <Position X="10.75" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAQABAAE=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::NonCompactMemoryIterator&lt;BlockType&gt;" Collapsed="true">
+    <Position X="13" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ExplicitHierarchy&lt;BlockType&gt;" Collapsed="true">
+    <Position X="3" Y="19" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgAAIAAAACEAAAAAIQAAACAAAAAAhAAAAAAAAAAQAA=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::MultiWayExplicitHierarchy&lt;DataType&gt;" Collapsed="true">
+    <Position X="3" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABgAAAEBAAAAEAAAAAAAAAUAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::KWayExplicitHierarchy&lt;DataType, K&gt;" Collapsed="true">
+    <Position X="4.75" Y="22.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACgAAAEBAAAAEAAAAAAAAAEABAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::BinaryExplicitHierarchy&lt;DataType&gt;" Collapsed="true">
+    <Position X="2.25" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAIggBAEBAAAAlEAAAAABAAUEAAAAAgAAAAAAQ=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ExplicitNetwork&lt;BlockType, GateType&gt;" Collapsed="true">
+    <Position X="16" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAACgCAADEAAAEgIgIAAAQAAAAEAgAACAAAAAEAAA=</HashCode>
+      <FileName>libds\amt\explicit_network.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ImplicitGateImplicitRelationsNetwork&lt;DataType&gt;" Collapsed="true">
+    <Position X="17.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_network.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ImplicitGateExplicitRelationsNetwork&lt;DataType&gt;" Collapsed="true">
+    <Position X="19.5" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_network.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ExplicitGateImplicitRelationsNetwork&lt;DataType&gt;" Collapsed="true">
+    <Position X="12.75" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_network.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ExplicitGateExplicitRelationsNetwork&lt;DataType&gt;" Collapsed="true">
+    <Position X="15" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_network.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ExplicitSequence&lt;BlockType&gt;" Collapsed="true">
+    <Position X="5.5" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UkBAAAACQAD0CgCEAAEIAAAQAAAAAAAQCAAAAEggAQI=</HashCode>
+      <FileName>libds\amt\explicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::SinglyLinkedSequence&lt;DataType&gt;" Collapsed="true">
+    <Position X="203.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::SinglyCyclicLinkedSequence&lt;DataType&gt;" Collapsed="true">
+    <Position X="210.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::DoublyLinkedSequence&lt;DataType&gt;" Collapsed="true">
+    <Position X="203.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAACAAAAEAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::DoublyCyclicLinkedSequence&lt;DataType&gt;" Collapsed="true">
+    <Position X="210.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::Hierarchy&lt;BlockType&gt;" Collapsed="true">
+    <Position X="5.25" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAIACgAAAERkAABUAAACQABMBciAABAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::KWayHierarchy&lt;BlockType, K&gt;" Collapsed="true">
+    <Position X="6.5" Y="19" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::BinaryHierarchy&lt;BlockType&gt;" Collapsed="true">
+    <Position X="5.25" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAKgABAAAAAAAhEAAAQAAAAREAABAAgAAIAAAQ=</HashCode>
+      <FileName>libds\amt\hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ImplicitHierarchy&lt;DataType, K&gt;" Collapsed="true">
+    <Position X="7.5" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAgIAAEBQAAAUAAACAAEMAUgAABAQBAAAAAAA=</HashCode>
+      <FileName>libds\amt\implicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::BinaryImplicitHierarchy&lt;DataType&gt;" Collapsed="true">
+    <Position X="7.5" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\implicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::ImplicitSequence&lt;DataType&gt;" Collapsed="true">
+    <Position X="7.75" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FkBAAAACQEBACgCEEAAIAAAQAAAAAAAQCAAAACgAAQI=</HashCode>
+      <FileName>libds\amt\implicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::CyclicImplicitSequence&lt;DataType&gt;" Collapsed="true">
+    <Position X="207.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>libds\amt\implicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::Network&lt;BlockType&gt;" Collapsed="true">
+    <Position X="16" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAABAAAAEgAgIAAAAAAAAEAAAACAAAAAEAAA=</HashCode>
+      <FileName>libds\amt\network.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::amt::Sequence&lt;BlockType&gt;" Collapsed="true">
+    <Position X="6.75" Y="24.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EkBABAACQABICgCEAAAIABAAAAAAAAAQCAAgAAgBAQI=</HashCode>
+      <FileName>libds\amt\sequence.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::structure_error" Collapsed="true">
+    <Position X="205.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\abstract_data_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::AbstractDataType" Collapsed="true">
+    <Position X="207.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAACEAAAAAIAAAAAAIAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>libds\adt\abstract_data_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::AbstractDataStructure&lt;T&gt;" Collapsed="true">
+    <Position X="205.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAACEAAAAAIECAAAAAAAAEAAAAAAAAAQAQAA=</HashCode>
+      <FileName>libds\adt\abstract_data_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::AbstractDataMultistructure&lt;T&gt;" Collapsed="true">
+    <Position X="203.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAEAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\abstract_data_type.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Dimension" Collapsed="true">
+    <Position X="209" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAEAAAAIAAQBAAAAAQAAAAAAgAAAAAAA=</HashCode>
+      <FileName>libds\adt\array.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Array&lt;T&gt;" Collapsed="true">
+    <Position X="203.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAECQACECEAACIYAAAAQAAAAAABAAAAAQAAAQAA=</HashCode>
+      <FileName>libds\adt\array.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Matrix&lt;T&gt;" Collapsed="true">
+    <Position X="209" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAgEAQACEAQAAAIQAAAAAAAAgAEACAAAAAAAAQAA=</HashCode>
+      <FileName>libds\adt\array.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::List&lt;T&gt;" Collapsed="true">
+    <Position X="6.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAAAAAAQABAAgAEAAQIAAAAAAAAAAAQAAAAAAgAAQI=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::GeneralList&lt;T, SequenceType&gt;" Collapsed="true">
+    <Position X="6.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAAAAECQABAAgAEAAQIAAAQAAAAAAAQAAAAAAgAAQI=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ImplicitList&lt;T&gt;" Collapsed="true">
+    <Position X="7.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ImplicitCyclicList&lt;T&gt;" Collapsed="true">
+    <Position X="10" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SinglyLinkedList&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SinglyCyclicLinkedList&lt;T&gt;" Collapsed="true">
+    <Position X="1" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::DoublyLinkedList&lt;T&gt;" Collapsed="true">
+    <Position X="3.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::DoublyCyclicLinkedList&lt;T&gt;" Collapsed="true">
+    <Position X="5.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\list.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::PriorityQueue&lt;P, T&gt;" Collapsed="true">
+    <Position X="24.5" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SequencePriorityQueue&lt;P, T, SequenceType&gt;" Collapsed="true">
+    <Position X="22.25" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::UnsortedSequencePriorityQueue&lt;P, T, SequenceType&gt;" Collapsed="true">
+    <Position X="20" Y="23.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SortedSequencePriorityQueue&lt;P, T, SequenceType&gt;" Collapsed="true">
+    <Position X="24.5" Y="23.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAgAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::UnsortedImplicitSequencePriorityQueue&lt;P, T&gt;" Collapsed="true">
+    <Position X="19" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::UnsortedExplicitSequencePriorityQueue&lt;P, T&gt;" Collapsed="true">
+    <Position X="21.25" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SortedImplicitSequencePriorityQueue&lt;P, T&gt;" Collapsed="true">
+    <Position X="23.5" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SortedExplicitSequencePriorityQueue&lt;P, T&gt;" Collapsed="true">
+    <Position X="25.75" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::TwoLists&lt;P, T&gt;" Collapsed="true">
+    <Position X="28" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAQAAACEAAAABIAAAIAAAAAAABAAAAAKAIAAQAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::BinaryHeap&lt;P, T&gt;" Collapsed="true">
+    <Position X="30.25" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAgAAAAAAAAAAIAAAAAgAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Queue&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="24.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ImplicitQueue&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAUAAgCEAAAAAIAAAIBAABAAEAAAAAAIAAAAwAA=</HashCode>
+      <FileName>libds\adt\queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ExplicitQueue&lt;T&gt;" Collapsed="true">
+    <Position X="2.75" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAUAAAAAAAAAAAAAAIBAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SelectSort&lt;T&gt;" Collapsed="true">
+    <Position X="1.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::InsertSort&lt;T&gt;" Collapsed="true">
+    <Position X="3.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::BubbleSort&lt;T&gt;" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::QuickSort&lt;T&gt;" Collapsed="true">
+    <Position X="8" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::HeapSort&lt;T&gt;" Collapsed="true">
+    <Position X="10.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ShellSort&lt;T&gt;" Collapsed="true">
+    <Position X="12.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::RadixSort&lt;Key, T&gt;" Collapsed="true">
+    <Position X="14.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgIAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::MergeSort&lt;T&gt;" Collapsed="true">
+    <Position X="17" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABgAAEBAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Stack&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\stack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ImplicitStack&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAUAAAAAAAAAAAAABIAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\stack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ExplicitStack&lt;T&gt;" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAcAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>libds\adt\stack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Table&lt;K, T&gt;" Collapsed="true">
+    <Position X="25.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAABAAAAEAAAAAAACAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SequenceTable&lt;K, T, SequenceType&gt;" Collapsed="true">
+    <Position X="22.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAECAAAAAAAAAAAAAAASAACAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::UnsortedSequenceTable&lt;K, T, SequenceType&gt;" Collapsed="true">
+    <Position X="21" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::UnsortedImplicitSequenceTable&lt;K, T&gt;" Collapsed="true">
+    <Position X="20" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::UnsortedExplicitSequenceTable&lt;K, T&gt;" Collapsed="true">
+    <Position X="22.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::SortedSequenceTable&lt;K, T&gt;" Collapsed="true">
+    <Position X="24.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAEAAAAAAAAAACAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::HashTable&lt;K, T&gt;" Collapsed="true">
+    <Position X="26.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAAAAAiAADEAAAEBIAAAABSAAAAAgIAAAAAAAAAQAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::GeneralBinarySearchTree&lt;K, T, BlockType&gt;" Collapsed="true">
+    <Position X="30" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAQBAAKAEAIAAAABSBAggAAgAAAAAAAAAYQA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::BinarySearchTree&lt;K, T&gt;" Collapsed="true">
+    <Position X="29" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Treap&lt;K, T&gt;" Collapsed="true">
+    <Position X="31.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAQA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::Tree&lt;T&gt;" Collapsed="true">
+    <Position X="5.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAIAAgAAAEBAAAAUAAgAAABABEgAgBAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\tree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::GeneralTree&lt;T, HierarchyType&gt;" Collapsed="true">
+    <Position X="5.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAIACgAAAEBAAAAUAAgAQABAhEhAgBAAAAAAAACA=</HashCode>
+      <FileName>libds\adt\tree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::MultiwayTree&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\tree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ImplicitKWayTree&lt;T, K&gt;" Collapsed="true">
+    <Position X="9.75" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\tree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ExplicitKWayTree&lt;T, K&gt;" Collapsed="true">
+    <Position X="0.75" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\tree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ImplicitBinaryTree&lt;T&gt;" Collapsed="true">
+    <Position X="3" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\tree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ds::adt::ExplicitBinaryTree&lt;T&gt;" Collapsed="true">
+    <Position X="5.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\tree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ds::tests::TestMessage" Collapsed="true">
+    <Position X="210.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\_details\test.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::tests::`anonymous-namespace'::test_failed_exception" Collapsed="true">
+    <Position X="209" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tests\_details\test.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::MemoryBlock&lt;DataType&gt;" Collapsed="true">
+    <Position X="16.5" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\abstract_memory_type.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::ExplicitHierarchyBlock&lt;DataType&gt;" Collapsed="true">
+    <Position X="13.25" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::MultiWayExplicitHierarchyBlock&lt;DataType&gt;" Collapsed="true">
+    <Position X="11" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAQAAABAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::KWayExplicitHierarchyBlock&lt;DataType, K&gt;" Collapsed="true">
+    <Position X="13.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAEAAAAAACAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::BinaryExplicitHierarchyBlock&lt;DataType&gt;" Collapsed="true">
+    <Position X="15.5" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAgAAAAAAAAkAA=</HashCode>
+      <FileName>libds\amt\explicit_hierarchy.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::NetworkBlockImplicitRelations&lt;DataType&gt;" Collapsed="true">
+    <Position X="20" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_network.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::NetworkBlockExplicitRelations&lt;DataType&gt;" Collapsed="true">
+    <Position X="22.25" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>libds\amt\explicit_network.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::SinglyLinkedSequenceBlock&lt;DataType&gt;" Collapsed="true">
+    <Position X="17.75" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>libds\amt\explicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::amt::DoublyLinkedSequenceBlock&lt;DataType&gt;" Collapsed="true">
+    <Position X="203.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAIAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>libds\amt\explicit_sequence.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::adt::PriorityQueueItem&lt;P, T&gt;" Collapsed="true">
+    <Position X="205.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\priority_queue.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::adt::Sort&lt;T&gt;" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\sorts.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::adt::TableItem&lt;K, T&gt;" Collapsed="true">
+    <Position X="207.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ds::adt::TreapItem&lt;K, T&gt;" Collapsed="true">
+    <Position X="203.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>libds\adt\table.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="ds::tests::Color" Collapsed="true">
+    <Position X="205.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAADAAAAA=</HashCode>
+      <FileName>tests\_details\console.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ds::tests::ConsoleOutputType" Collapsed="true">
+    <Position X="207.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>tests\_details\console_output.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ds::tests::TestResult" Collapsed="true">
+    <Position X="210.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAgAAAAAAAAAAAAEAABAAAA=</HashCode>
+      <FileName>tests\_details\test.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ds::tests::TestMessageType" Collapsed="true">
+    <Position X="209" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>tests\_details\test.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ds::tests::AssertPolicy" Collapsed="true">
+    <Position X="203.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>tests\_details\test.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
