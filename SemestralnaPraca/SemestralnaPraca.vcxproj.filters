@@ -14,4 +14,20 @@
       <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="kraje.csv" />
+    <None Include="okresy.csv" />
+    <None Include="obce.csv" />
+    <None Include="documents\uroven 1\data\obce.csv" />
+    <None Include="documents\uroven 1\data\okresy.csv" />
+    <None Include="documents\uroven 1\data\kraje.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Searcher.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="CSVElement.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

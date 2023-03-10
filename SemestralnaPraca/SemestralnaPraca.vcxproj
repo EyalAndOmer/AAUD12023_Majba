@@ -128,6 +128,18 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="documents\uroven 1\data\kraje.csv" />
+    <None Include="documents\uroven 1\data\obce.csv" />
+    <None Include="documents\uroven 1\data\okresy.csv" />
+    <None Include="obce.csv" />
+    <None Include="okresy.csv" />
+    <None Include="kraje.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CSVElement.h" />
+    <ClInclude Include="Searcher.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
