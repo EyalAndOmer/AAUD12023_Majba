@@ -1,7 +1,7 @@
 #include "SearchData.h"
 
 // Metoda na naplnenie vektora
-void SearchData::fill_vector(std::vector<CSVElement*>& vec, std::string file_name)
+void SearchData::fill_vector(ds::amt::ImplicitSequence<CSVElement*>& vec, std::string file_name)
 {
 	ds::amt::ImplicitSequence<std::string> values;
 	std::string line, element;
@@ -40,7 +40,7 @@ void SearchData::fill_vector(std::vector<CSVElement*>& vec, std::string file_nam
 				values.insertLast().data_ = "";
 			}
 
-			vec.push_back(new CSVElement(values));
+			vec.insertLast().data_ = (new CSVElement(values));
 		}
 	}
 	else
@@ -52,10 +52,20 @@ void SearchData::fill_vector(std::vector<CSVElement*>& vec, std::string file_nam
 
 SearchData::SearchData()
 {
+	kraje = new ds::amt::ImplicitSequence<CSVElement*>();
+	okresy = new ds::amt::ImplicitSequence<CSVElement*>();
+	obce = new ds::amt::ImplicitSequence<CSVElement*>();
 	// Naplnenie udajovych struktur
-	fill_vector(kraje, "documents\\uroven_1\\data\\krajeUTF8.csv");
-	fill_vector(okresy, "documents\\uroven_1\\data\\okresyUTF8.csv");
-	fill_vector(obce, "documents\\uroven_1\\data\\obceUTF8.csv");
+	fill_vector(*kraje, "documents\\uroven_1\\data\\krajeUTF8.csv");
+	fill_vector(*okresy, "documents\\uroven_1\\data\\okresyUTF8.csv");
+	fill_vector(*obce, "documents\\uroven_1\\data\\obceUTF8.csv");
+}
+
+SearchData::~SearchData()
+{
+	/*delete kraje;
+	delete okresy;
+	delete obce;*/
 }
 
 // nutne pre fungovanie tolower pre specialne znaky ako je ž, š, č... Bez tohoto je kod funkcny, ale std::tolower nepremeni

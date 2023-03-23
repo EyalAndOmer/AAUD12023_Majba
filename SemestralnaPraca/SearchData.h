@@ -1,4 +1,3 @@
-#include <libds/amt/implicit_sequence.h>
 #include "Searcher.h"
 #include <iostream>
 #include <fstream>
@@ -15,13 +14,14 @@ public class SearchData
 {
 public:
 	SearchData();
+	~SearchData();
 public:
 	// Definicia udajovych struktur
-	std::vector<CSVElement*> kraje;
-	std::vector<CSVElement*> okresy;
-	std::vector<CSVElement*> obce;
-	void fill_vector(std::vector<CSVElement*>& vec, std::string file_name);
-	Searcher<std::vector<CSVElement*>::iterator, std::string(CSVElement::*)()> searcher;
+	ds::amt::ImplicitSequence<CSVElement*>* kraje;
+	ds::amt::ImplicitSequence<CSVElement*>* okresy;
+	ds::amt::ImplicitSequence<CSVElement*>* obce;
+	void fill_vector(ds::amt::ImplicitSequence<CSVElement*>& vec, std::string file_name);
+	Searcher<ds::amt::ImplicitSequence<CSVElement*>::ImplicitSequenceIterator, std::string(CSVElement::*)()> searcher;
 	std::wstring to_wstring(std::string const& s);
 	std::string to_string(std::wstring const& s);
 	std::string to_lower(std::string const& s);

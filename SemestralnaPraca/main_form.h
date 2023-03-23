@@ -314,7 +314,7 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 		std::string substring = msclr::interop::marshal_as<std::string>(tbSearchValue);
 
 		auto selectedAlgorithmLambda = selectedAlgorithm == "Zo zaciatku" ? myData->search_from_beginning : myData->search_substring;
-		std::vector<CSVElement*> selectedFileData;
+		ds::amt::ImplicitSequence<CSVElement*>* selectedFileData;
 
 
 		// Postupne ziskavanie a testovanie zapisanych hodnot
@@ -328,7 +328,7 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 			selectedFileData = myData->kraje;
 		}
 
-		std::string(CSVElement:: * selectedFieldMethod)();
+		std::string(CSVElement::* selectedFieldMethod)();
 
 
 		if (selectedField == "Cele meno")
@@ -348,10 +348,10 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 		}
 
 		// Zavolanie samotnej search metody
-		myData->searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod, selectedFileData.begin(), selectedFileData.end());
+		myData->searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod, (*selectedFileData).begin(), (*selectedFileData).end());
 
 		// Vypis ziskanych elementov do listview
-		std::vector<CSVElement*> outputElements = myData->searcher.getOutput();
+		ds::amt::ImplicitSequence<CSVElement*> outputElements = myData->searcher.getOutput();
 		for (auto item: outputElements)
 		{
 			ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(item->get_official_title().c_str()));

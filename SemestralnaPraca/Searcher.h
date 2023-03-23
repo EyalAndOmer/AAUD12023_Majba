@@ -8,7 +8,8 @@ template <typename Iterator, typename Attribute>
 class Searcher
 {
 private:
-	std::vector<CSVElement*> output;
+	/*std::vector<CSVElement*> output;*/
+	ds::amt::ImplicitSequence<CSVElement*> output;
 
 
 public:
@@ -30,12 +31,13 @@ public:
 			// Dereferencia attribute je tam preto, lebo posielam attribute ako adresu metody
 			if (compare_function(((*iter)->*attribute)(), substring))
 			{
-				output.push_back(*iter);
+				output.insertLast().data_ = (*iter);
 			}
 		}
 	}
 
-	std::vector<CSVElement*> getOutput()
+
+	ds::amt::ImplicitSequence<CSVElement*> getOutput()
 	{
 		return output;
 	}
