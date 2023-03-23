@@ -1,5 +1,5 @@
 #include <string>
-#include <vector>
+#include <libds/amt/implicit_sequence.h>
 
 class CSVElement {
 private:
@@ -9,12 +9,12 @@ private:
 	std::string short_title;
 	std::string note;
 public:
-	CSVElement(std::vector<std::string>& content) {
-		this->code = content[0];
-		this->official_title = content[1];
-		this->medium_title = content[2];
-		this->short_title = content[3];
-		this->note = content[4];
+	CSVElement(ds::amt::ImplicitSequence<std::string>& content) {
+		this->code = content.access(0)->data_;
+		this->official_title = content.access(1)->data_;
+		this->medium_title = content.access(2)->data_;
+		this->short_title = content.access(3)->data_;
+		this->note = content.access(4)->data_;
 	}
 
 	std::string get_code()
