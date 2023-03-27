@@ -21,10 +21,10 @@ namespace Gui {
 	private:
 		SearchData* myData;
 	public:
-		main_form(SearchData* data)
+		main_form(void)
 		{
 			InitializeComponent();
-			this->myData = data;
+			this->myData = new SearchData();;
 		}
 
 	protected:
@@ -34,6 +34,7 @@ namespace Gui {
 		/// </summary>
 		~main_form()
 		{
+			delete myData;
 			if (components)
 			{
 				delete components;

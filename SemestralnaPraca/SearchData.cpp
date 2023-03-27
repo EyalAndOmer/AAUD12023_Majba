@@ -63,9 +63,28 @@ SearchData::SearchData()
 
 SearchData::~SearchData()
 {
-	/*delete kraje;
+	for (auto element: *kraje)
+	{
+		delete element;
+	}
+
+	for (auto element : *okresy)
+	{
+		delete element;
+	}
+
+	for (auto element : *obce)
+	{
+		delete element;
+	}
+
+	delete kraje;
 	delete okresy;
-	delete obce;*/
+	delete obce;
+
+	kraje = nullptr;
+	okresy = nullptr;
+	obce = nullptr;
 }
 
 // nutne pre fungovanie tolower pre specialne znaky ako je ž, š, č... Bez tohoto je kod funkcny, ale std::tolower nepremeni

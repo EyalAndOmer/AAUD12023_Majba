@@ -20,6 +20,7 @@ public:
 	ds::amt::ImplicitSequence<CSVElement*>* kraje;
 	ds::amt::ImplicitSequence<CSVElement*>* okresy;
 	ds::amt::ImplicitSequence<CSVElement*>* obce;
+
 	void fill_vector(ds::amt::ImplicitSequence<CSVElement*>& vec, std::string file_name);
 	Searcher<ds::amt::ImplicitSequence<CSVElement*>::ImplicitSequenceIterator, std::string(CSVElement::*)()> searcher;
 	std::wstring to_wstring(std::string const& s);

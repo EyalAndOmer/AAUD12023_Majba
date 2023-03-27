@@ -13,14 +13,14 @@ void main()
 	//   SetConsoleOutputCP(1250);
 	//   SetConsoleCP(1250);
 
-	// Nastavenie globalneho locale nefunguje... ale ked ho poslem do funkcie tolower tak funguje bez chyby...
+	// Nastavenie globalneho locale nefunguje... ale ked ho poslem do funkcie tolower ako parameter locale tak funguje bez chyby...
 	/*setlocale(LC_ALL, "en_US.UTF-8");*/
 
-	SearchData* data = new SearchData();
+	initHeapMonitor();
 	// Spustenie GUI
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	Gui::main_form form(data);
-	Application::Run(% form);
+	Gui::main_form^ form = gcnew Gui::main_form();
+	Application::Run(form);
 }
 
