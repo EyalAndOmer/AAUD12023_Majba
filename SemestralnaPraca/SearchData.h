@@ -7,6 +7,7 @@
 #include <cwctype>
 #include <codecvt>
 #include <functional>  // Import pre lambdu
+#include <libds/amt/explicit_hierarchy.h>
 
 // Enum nazvov suborov
 
@@ -21,8 +22,10 @@ public:
 	ds::amt::ImplicitSequence<CSVElement*>* okresy;
 	ds::amt::ImplicitSequence<CSVElement*>* obce;
 
-	void fill_vector(ds::amt::ImplicitSequence<CSVElement*>& vec, std::string file_name);
-	Searcher<ds::amt::ImplicitSequence<CSVElement*>::ImplicitSequenceIterator, std::string(CSVElement::*)()> searcher;
+	ds::amt::MultiWayExplicitHierarchy<CSVElement*>* hierarchy;
+
+	void fill();
+	Searcher<ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator, std::string(CSVElement::*)()> searcher;
 	std::wstring to_wstring(std::string const& s);
 	std::string to_string(std::wstring const& s);
 	std::string to_lower(std::string const& s);

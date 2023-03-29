@@ -40,10 +40,10 @@ namespace Gui {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^ lFileSelect;
+
 	protected:
 
-	private: System::Windows::Forms::ComboBox^ cbFileSelect;
+
 	private: System::Windows::Forms::Label^ lSearchAlgorithm;
 	private: System::Windows::Forms::ComboBox^ cbSearchAlgorithm;
 	private: System::Windows::Forms::Label^ lSearchBox;
@@ -58,6 +58,7 @@ namespace Gui {
 	private: System::Windows::Forms::ColumnHeader^ ColNote;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::ComboBox^ cbSelectField;
+	private: System::Windows::Forms::TreeView^ twUzemneJednotky;
 
 	protected:
 
@@ -75,8 +76,6 @@ namespace Gui {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->lFileSelect = (gcnew System::Windows::Forms::Label());
-			this->cbFileSelect = (gcnew System::Windows::Forms::ComboBox());
 			this->lSearchAlgorithm = (gcnew System::Windows::Forms::Label());
 			this->cbSearchAlgorithm = (gcnew System::Windows::Forms::ComboBox());
 			this->lSearchBox = (gcnew System::Windows::Forms::Label());
@@ -90,30 +89,12 @@ namespace Gui {
 			this->ColNote = (gcnew System::Windows::Forms::ColumnHeader());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->cbSelectField = (gcnew System::Windows::Forms::ComboBox());
+			this->twUzemneJednotky = (gcnew System::Windows::Forms::TreeView());
 			this->SuspendLayout();
-			// 
-			// lFileSelect
-			// 
-			this->lFileSelect->AutoSize = true;
-			this->lFileSelect->Location = System::Drawing::Point(22, 23);
-			this->lFileSelect->Name = L"lFileSelect";
-			this->lFileSelect->Size = System::Drawing::Size(182, 13);
-			this->lFileSelect->TabIndex = 0;
-			this->lFileSelect->Text = L"Vyberte subor nad ktorym vyhladavat";
-			// 
-			// cbFileSelect
-			// 
-			this->cbFileSelect->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
-			this->cbFileSelect->FormattingEnabled = true;
-			this->cbFileSelect->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Kraje", L"Okresy", L"Obce" });
-			this->cbFileSelect->Location = System::Drawing::Point(25, 40);
-			this->cbFileSelect->Name = L"cbFileSelect";
-			this->cbFileSelect->Size = System::Drawing::Size(179, 21);
-			this->cbFileSelect->TabIndex = 1;
 			// 
 			// lSearchAlgorithm
 			// 
-			this->lSearchAlgorithm->Location = System::Drawing::Point(270, 24);
+			this->lSearchAlgorithm->Location = System::Drawing::Point(25, 15);
 			this->lSearchAlgorithm->Name = L"lSearchAlgorithm";
 			this->lSearchAlgorithm->Size = System::Drawing::Size(179, 13);
 			this->lSearchAlgorithm->TabIndex = 0;
@@ -125,7 +106,7 @@ namespace Gui {
 			this->cbSearchAlgorithm->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->cbSearchAlgorithm->FormattingEnabled = true;
 			this->cbSearchAlgorithm->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Zo zaciatku", L"V celom slove" });
-			this->cbSearchAlgorithm->Location = System::Drawing::Point(270, 40);
+			this->cbSearchAlgorithm->Location = System::Drawing::Point(25, 30);
 			this->cbSearchAlgorithm->Name = L"cbSearchAlgorithm";
 			this->cbSearchAlgorithm->Size = System::Drawing::Size(179, 21);
 			this->cbSearchAlgorithm->TabIndex = 2;
@@ -134,7 +115,7 @@ namespace Gui {
 			// lSearchBox
 			// 
 			this->lSearchBox->AutoSize = true;
-			this->lSearchBox->Location = System::Drawing::Point(22, 76);
+			this->lSearchBox->Location = System::Drawing::Point(466, 14);
 			this->lSearchBox->Name = L"lSearchBox";
 			this->lSearchBox->Size = System::Drawing::Size(157, 13);
 			this->lSearchBox->TabIndex = 3;
@@ -142,14 +123,14 @@ namespace Gui {
 			// 
 			// tbSearch
 			// 
-			this->tbSearch->Location = System::Drawing::Point(25, 93);
+			this->tbSearch->Location = System::Drawing::Point(469, 31);
 			this->tbSearch->Name = L"tbSearch";
 			this->tbSearch->Size = System::Drawing::Size(183, 20);
 			this->tbSearch->TabIndex = 4;
 			// 
 			// buttonSearch
 			// 
-			this->buttonSearch->Location = System::Drawing::Point(201, 93);
+			this->buttonSearch->Location = System::Drawing::Point(645, 31);
 			this->buttonSearch->Name = L"buttonSearch";
 			this->buttonSearch->Size = System::Drawing::Size(75, 20);
 			this->buttonSearch->TabIndex = 5;
@@ -167,9 +148,9 @@ namespace Gui {
 					this->colShorterName, this->colShortestName, this->colCode, this->ColNote
 			});
 			this->lvSearchOutput->HideSelection = false;
-			this->lvSearchOutput->Location = System::Drawing::Point(25, 119);
+			this->lvSearchOutput->Location = System::Drawing::Point(273, 119);
 			this->lvSearchOutput->Name = L"lvSearchOutput";
-			this->lvSearchOutput->Size = System::Drawing::Size(739, 130);
+			this->lvSearchOutput->Size = System::Drawing::Size(757, 130);
 			this->lvSearchOutput->TabIndex = 6;
 			this->lvSearchOutput->UseCompatibleStateImageBehavior = false;
 			this->lvSearchOutput->View = System::Windows::Forms::View::Details;
@@ -177,32 +158,32 @@ namespace Gui {
 			// colLongName
 			// 
 			this->colLongName->Text = L"Cely nazov";
-			this->colLongName->Width = 200;
+			this->colLongName->Width = 143;
 			// 
 			// colShorterName
 			// 
 			this->colShorterName->Text = L"Skrateny nazov";
-			this->colShorterName->Width = 200;
+			this->colShorterName->Width = 170;
 			// 
 			// colShortestName
 			// 
 			this->colShortestName->Text = L"Kratky nazov";
-			this->colShortestName->Width = 119;
+			this->colShortestName->Width = 148;
 			// 
 			// colCode
 			// 
 			this->colCode->Text = L"Kod";
-			this->colCode->Width = 120;
+			this->colCode->Width = 119;
 			// 
 			// ColNote
 			// 
 			this->ColNote->Text = L"Poznamka";
-			this->ColNote->Width = 80;
+			this->ColNote->Width = 173;
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(496, 24);
+			this->label1->Location = System::Drawing::Point(238, 15);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(184, 13);
 			this->label1->TabIndex = 7;
@@ -220,16 +201,27 @@ namespace Gui {
 				L"Cele meno", L"Skratene meno", L"Kratke meno",
 					L"Kod", L"Poznamka"
 			});
-			this->cbSelectField->Location = System::Drawing::Point(499, 39);
+			this->cbSelectField->Location = System::Drawing::Point(241, 30);
 			this->cbSelectField->Name = L"cbSelectField";
 			this->cbSelectField->Size = System::Drawing::Size(181, 21);
 			this->cbSelectField->TabIndex = 8;
+			// 
+			// twUzemneJednotky
+			// 
+			this->twUzemneJednotky->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->twUzemneJednotky->Location = System::Drawing::Point(25, 119);
+			this->twUzemneJednotky->Name = L"twUzemneJednotky";
+			this->twUzemneJednotky->Size = System::Drawing::Size(179, 130);
+			this->twUzemneJednotky->TabIndex = 9;
 			// 
 			// main_form
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(776, 261);
+			this->ClientSize = System::Drawing::Size(1048, 261);
+			this->Controls->Add(this->twUzemneJednotky);
 			this->Controls->Add(this->cbSelectField);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->lvSearchOutput);
@@ -238,8 +230,6 @@ namespace Gui {
 			this->Controls->Add(this->lSearchBox);
 			this->Controls->Add(this->cbSearchAlgorithm);
 			this->Controls->Add(this->lSearchAlgorithm);
-			this->Controls->Add(this->cbFileSelect);
-			this->Controls->Add(this->lFileSelect);
 			this->Name = L"main_form";
 			this->Text = L"AAUD1 Semestralna Praca, made by Maros Majba 2023";
 			this->ResumeLayout(false);
@@ -349,19 +339,19 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 		}
 
 		// Zavolanie samotnej search metody
-		myData->searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod, (*selectedFileData).begin(), (*selectedFileData).end());
+		//myData->searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod, (*selectedFileData).begin(), (*selectedFileData).end());
 
-		// Vypis ziskanych elementov do listview
-		ds::amt::ImplicitSequence<CSVElement*> outputElements = myData->searcher.getOutput();
-		for (auto item: outputElements)
-		{
-			ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(item->get_official_title().c_str()));
-			listViewItem->SubItems->Add(gcnew String(item->get_medium_title().c_str()));
-			listViewItem->SubItems->Add(gcnew String(item->get_short_title().c_str()));
-			listViewItem->SubItems->Add(gcnew String(item->get_code().c_str()));
-			listViewItem->SubItems->Add(gcnew String(item->get_note().c_str()));
-			lvSearchOutput->Items->Add(listViewItem);
-		}
+		//// Vypis ziskanych elementov do listview
+		//ds::amt::ImplicitSequence<CSVElement*> outputElements = myData->searcher.getOutput();
+		//for (auto item: outputElements)
+		//{
+		//	ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(item->get_official_title().c_str()));
+		//	listViewItem->SubItems->Add(gcnew String(item->get_medium_title().c_str()));
+		//	listViewItem->SubItems->Add(gcnew String(item->get_short_title().c_str()));
+		//	listViewItem->SubItems->Add(gcnew String(item->get_code().c_str()));
+		//	listViewItem->SubItems->Add(gcnew String(item->get_note().c_str()));
+		//	lvSearchOutput->Items->Add(listViewItem);
+		//}
 	}
 }
 };

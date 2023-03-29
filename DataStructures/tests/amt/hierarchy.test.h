@@ -250,6 +250,7 @@ namespace ds::tests
             auto orderIt = begin(order);
             auto hierarchyIt = hierarchy.begin();
             const auto size = static_cast<int>(hierarchy.size());
+
             for (int i = 0; i < size; ++i)
             {
                 this->assert_equals(*orderIt, *hierarchyIt);

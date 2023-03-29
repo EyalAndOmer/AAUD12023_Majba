@@ -257,7 +257,13 @@ namespace ds::amt {
 			size_t degree = this->degree(*node);
 			for (size_t i = 0; i < degree; ++i) {
 				BlockType* son = this->accessSon(*node, i);
-				this->processPreOrder(son, operation);
+				if (son != nullptr)
+				{
+					this->processPreOrder(son, operation);
+				} else // nutne pre podmienku keby bola medzera v synoch, bol by syn na indexoch 0 a 2
+				{
+					++degree;
+				}
 			}
 		}
 	}
@@ -269,7 +275,14 @@ namespace ds::amt {
 			size_t degree = this->degree(*node);
 			for (size_t i = 0; i < degree; ++i) {
 				BlockType* son = this->accessSon(*node, i);
-				this->processPostOrder(son, operation);
+				if (son != nullptr)
+				{
+					this->processPostOrder(son, operation);
+				}
+				else
+				{
+					++degree;
+				}
 			}
 			operation(node);
 		}
@@ -457,7 +470,8 @@ namespace ds::amt {
 		}
 		else {
 			this->removePosition();
-			if (this->currentPosition_ == nullptr) {
+			if (this->currentPosition_ != nullptr) {
+				// Rekurzivne volanie metody ++
 				++(*this);
 			}
 		}
@@ -485,9 +499,19 @@ namespace ds::amt {
 	template<typename BlockType>
 	typename Hierarchy<BlockType>::PostOrderHierarchyIterator& Hierarchy<BlockType>::PostOrderHierarchyIterator::operator++()
 	{
-		if ((*this->currentPosition_).currentNodeProcessed_ && this->tryFindNextSonInCurrentPosition()) {
+		if (this->currentPosition_->currentNodeProcessed_ && this->tryFindNextSonInCurrentPosition()) {
 			this->savePosition(this->currentPosition_->currentSon_);
 			++(*this);
+		} else
+		{
+			if (this->currentPosition_->currentNodeProcessed_)
+			{
+				this->removePosition();
+				if (this->currentPosition_ == nullptr)
+				{
+					++(*this);
+				}
+			}
 		}
 
 		return *this;
@@ -621,14 +645,14 @@ namespace ds::amt {
 	template<typename BlockType>
 	typename BinaryHierarchy<BlockType>::InOrderHierarchyIterator& BinaryHierarchy<BlockType>::InOrderHierarchyIterator::operator++()
 	{
-		if ((*this->currentPosition_).currentNodeProcessed_) {
-			if ((*this->currentPosition_).currentSonOrder_ != LEFT_SON_INDEX && this->tryToGoToLeftSonInCurrentPosition()) {
+		if (this->currentPosition_->currentNodeProcessed_) {
+			if (this->currentPosition_->currentSonOrder_ != LEFT_SON_INDEX && this->tryToGoToLeftSonInCurrentPosition()) {
 				this->savePosition(this->currentPosition_->currentSon_);
 				++(*this);
 			}
 		}
 		else {
-			if ((*this->currentPosition_).currentSonOrder_ != RIGHT_SON_INDEX && this->tryToGoToRightSonInCurrentPosition()) {
+			if (this->currentPosition_->currentSonOrder_ != RIGHT_SON_INDEX && this->tryToGoToRightSonInCurrentPosition()) {
 				this->savePosition(this->currentPosition_->currentSon_);
 				++(*this);
 			}
