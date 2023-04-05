@@ -499,7 +499,7 @@ namespace ds::amt {
 	template<typename BlockType>
 	typename Hierarchy<BlockType>::PostOrderHierarchyIterator& Hierarchy<BlockType>::PostOrderHierarchyIterator::operator++()
 	{
-		if (this->currentPosition_->currentNodeProcessed_ && this->tryFindNextSonInCurrentPosition()) {
+		if (!this->currentPosition_->currentNodeProcessed_ && this->tryFindNextSonInCurrentPosition()) {
 			this->savePosition(this->currentPosition_->currentSon_);
 			++(*this);
 		} else
@@ -507,7 +507,7 @@ namespace ds::amt {
 			if (this->currentPosition_->currentNodeProcessed_)
 			{
 				this->removePosition();
-				if (this->currentPosition_ == nullptr)
+				if (this->currentPosition_ != nullptr)
 				{
 					++(*this);
 				}
@@ -645,7 +645,7 @@ namespace ds::amt {
 	template<typename BlockType>
 	typename BinaryHierarchy<BlockType>::InOrderHierarchyIterator& BinaryHierarchy<BlockType>::InOrderHierarchyIterator::operator++()
 	{
-		if (this->currentPosition_->currentNodeProcessed_) {
+		if (!this->currentPosition_->currentNodeProcessed_) {
 			if (this->currentPosition_->currentSonOrder_ != LEFT_SON_INDEX && this->tryToGoToLeftSonInCurrentPosition()) {
 				this->savePosition(this->currentPosition_->currentSon_);
 				++(*this);

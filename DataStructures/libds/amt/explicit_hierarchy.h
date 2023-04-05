@@ -295,8 +295,8 @@ namespace ds::amt {
 	template<typename BlockType>
     BlockType* ExplicitHierarchy<BlockType>::accessParent(const BlockType& node) const
 	{
-		/*return const_cast<BlockType&>(node.parent_);*/
-		throw std::runtime_error("Not implemented yet");
+		// dynamic cast robi castovu kontrolu za behu, static cast nie
+		return static_cast<BlockType*>(node.parent_);
 	}
 
 	template<typename BlockType>
@@ -332,8 +332,7 @@ namespace ds::amt {
     template <typename DataType>
     MultiWayExplicitHierarchy<DataType>::~MultiWayExplicitHierarchy()
     {
-		this->processPostOrder(this->root_, [&](BlockType* node) {delete node; });
-		this->root_ = nullptr;
+		this->clear();
     }
 
     template<typename DataType>
@@ -400,8 +399,7 @@ namespace ds::amt {
     template <typename DataType, size_t K>
     KWayExplicitHierarchy<DataType, K>::~KWayExplicitHierarchy()
     {
-		this->processPostOrder(this->root_, [&](BlockType* node) {delete node; });
-		this->root_ = nullptr;
+		this->clear();
     }
 
     template<typename DataType, size_t K>
