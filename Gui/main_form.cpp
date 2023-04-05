@@ -33,9 +33,9 @@ std::vector<std::unique_ptr<ds::tests::Test>> createTests()
 	 amt->add_test(std::make_unique<ds::tests::HierarchyTest>());
 
 	//// TODO 07
-	//adt->add_test(std::make_unique<ds::tests::ListTest>());
-	//adt->add_test(std::make_unique<ds::tests::ArraysTest>());
-	//adt->add_test(std::make_unique<ds::tests::TreeTest>());
+	adt->add_test(std::make_unique<ds::tests::ListTest>());
+	adt->add_test(std::make_unique<ds::tests::ArraysTest>());
+	adt->add_test(std::make_unique<ds::tests::TreeTest>());
 
 	//// TODO 08
 	//adt->add_test(std::make_unique<ds::tests::PriorityQueueTest>());
@@ -1420,6 +1420,17 @@ namespace gui
 void main(array<Sys::String^>^ args)
 {
 	initHeapMonitor();
+
+	ds::adt::GeneralList<int, ds::amt::ImplicitSequence<int>> test;
+
+	test.insertLast(0);
+	test.insertLast(1);
+	test.insertLast(2);
+
+	for (auto it = test.begin(); it != test.end(); ++it)
+	{
+		std::cout << *it << '\n';
+	}
 
     auto const tests = createTests();
 	auto const analyzers = createAnalyzers();
