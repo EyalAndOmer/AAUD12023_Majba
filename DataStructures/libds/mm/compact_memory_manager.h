@@ -86,9 +86,6 @@ namespace ds::mm {
 		base_ = nullptr;
 		end_ = nullptr;
 		limit_ = nullptr;
-
-		//	// Finalizuj predka ???
-		//	 this->~MemoryManager<BlockType>();
 	}
 
 	template<typename BlockType>
@@ -121,10 +118,6 @@ namespace ds::mm {
 	template<typename BlockType>
 	void CompactMemoryManager<BlockType>::releaseMemory(BlockType* pointer)
 	{
-		if (pointer < base_ || pointer > end_) {
-			throw std::bad_alloc();
-		}
-
 		BlockType* p = pointer;
 
 		while (p != end_) {
@@ -147,7 +140,7 @@ namespace ds::mm {
 
 		std::memmove(base_ + index, base_ + index + 1, (end_ - base_ - index - 1) * sizeof(BlockType));
 		--end_;
-		//        releaseMemory();
+		--this->allocatedBlockCount_;
 	}
 
 	template<typename BlockType>
