@@ -31,5 +31,8 @@
     <ClInclude Include="SearchData.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="types.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

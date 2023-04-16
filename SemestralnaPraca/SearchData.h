@@ -18,13 +18,13 @@ public:
 	~SearchData();
 public:
 	// Definicia udajovych struktur
-	ds::amt::ImplicitSequence<CSVElement*>* kraje;
-	ds::amt::ImplicitSequence<CSVElement*>* okresy;
-	ds::amt::ImplicitSequence<CSVElement*>* obce;
 
 	ds::amt::MultiWayExplicitHierarchy<CSVElement*>* hierarchy;
+	ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>* hierarchy_current_block;
+;
 
 	void fill();
+	void loadCSV(const std::string& path, ImplicitList<CSVElement*>& data, std::string UC_type);
 	Searcher<ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator, std::string(CSVElement::*)()> searcher;
 	std::wstring to_wstring(std::string const& s);
 	std::string to_string(std::wstring const& s);
@@ -50,5 +50,9 @@ public:
 		std::string lowercaseElement = to_lower(element);
 
 		return lowercaseElement.find(lowercaseSubstring) != std::string::npos;
+	};
+
+	std::function<bool(const std::string&, const std::string&)> has_type = [this](const std::string& selectedUC, const std::string& elementUC) {
+		return selectedUC == elementUC;
 	};
 };

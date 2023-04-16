@@ -18,30 +18,19 @@ void main()
 
 	initHeapMonitor();
 
-	SearchData* data = new SearchData();
+	/*SearchData* data = new SearchData();
 
-	auto it = ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(data->hierarchy, data->hierarchy->accessSon(*data->hierarchy->accessRoot(), 0));
+	auto it = ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(data->hierarchy,data->hierarchy->accessRoot());*/
 
-	data->searcher.search("brat", data->search_from_beginning, &CSVElement::get_short_title, it, data->hierarchy->end());
-	auto output = data->searcher.getOutput();
+	//data->searcher.search("brat", data->search_from_beginning, &CSVElement::get_short_title, it, data->hierarchy->end());
+	//auto output = data->searcher.getOutput();
 
-	for (auto el: output)
-	{
-		std::cout << el->get_official_title() << " " << el->get_medium_title() << " " <<
-			el->get_short_title() << " " << el->get_code() << " " << el->get_note() << '\n';
-	}
-
-	delete data;
-
-	//std::function<void(const ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*)> print_tree = [&](auto el) {
+	//std::function<void(const ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*)> print_tree = [&, data](auto el) {
 	//	std::cout << el->data_->get_official_title() << " " << el->data_->get_medium_title() << " " <<
-	//		el->data_->get_short_title() << " " << el->data_->get_code() << " " << el->data_->get_note() << '\n';
+	//		el->data_->get_short_title() << " " << data->hierarchy->degree(*el) << '\n';
 	//};
 
 	//data->hierarchy->processPreOrder(data->hierarchy->accessRoot(), print_tree);
-
-
-
 
 	//auto begin = data->kraje->begin();
 	//auto end = data->kraje->end();
@@ -52,11 +41,11 @@ void main()
 	//	std::cout << (*it)->get_short_title() << '\n';
 	//}
 
-
 	// Spustenie GUI
-	//Application::EnableVisualStyles();
-	//Application::SetCompatibleTextRenderingDefault(false);
-	//Gui::main_form^ form = gcnew Gui::main_form();
-	//Application::Run(form);
+	Application::EnableVisualStyles();
+	Application::SetCompatibleTextRenderingDefault(false);
+	Gui::main_form^ form = gcnew Gui::main_form();
+	Application::Run(form);
+
 }
 

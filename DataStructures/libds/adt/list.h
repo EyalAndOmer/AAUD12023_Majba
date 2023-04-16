@@ -28,6 +28,8 @@ namespace ds::adt {
         virtual void removeFirst() = 0;
         virtual void removeLast() = 0;
         virtual void remove(size_t index) = 0;
+
+
     };
 
     //----------
@@ -43,6 +45,7 @@ namespace ds::adt {
     public:
         GeneralList();
         GeneralList(const GeneralList& other);
+        GeneralList(std::initializer_list<T> elements);
 
         size_t calculateIndex(T element) override;
 
@@ -61,6 +64,8 @@ namespace ds::adt {
         void removeFirst() override;
         void removeLast() override;
         void remove(size_t index) override;
+
+        T operator[](std::size_t index);
 
         IteratorType begin();
         IteratorType end();
@@ -118,6 +123,17 @@ namespace ds::adt {
     };
 
     //----------
+
+    // Implementacia vlastneho konstruktora GeneralListu pre podporu inline vytvarania
+    template<typename T, typename SequenceType>
+    GeneralList<T, SequenceType>::GeneralList(std::initializer_list<T> elements) :
+        ADS<T>(new SequenceType())
+    {
+        for (const auto& element : elements)
+        {
+	        insertLast(element);
+        }
+    }
 
     template<typename T, typename SequenceType>
     GeneralList<T, SequenceType>::GeneralList() :
@@ -257,6 +273,12 @@ namespace ds::adt {
             this->error("Invalid index");
         }
         this->getSequence()->remove(index);
+    }
+
+    template <typename T, typename SequenceType>
+    T GeneralList<T, SequenceType>::operator[](std::size_t index)
+    {
+        return this->access(index);
     }
 
     template <typename T, typename SequenceType>
