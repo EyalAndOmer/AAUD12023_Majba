@@ -8,6 +8,8 @@
 #include <codecvt>
 #include <functional>  // Import pre lambdu
 #include <libds/amt/explicit_hierarchy.h>
+#include <libds/adt/table.h>
+#include <libds/adt/list.h>
 
 // Enum nazvov suborov
 
@@ -19,12 +21,20 @@ public:
 public:
 	// Definicia udajovych struktur
 
+	// Hierarcha UC
 	ds::amt::MultiWayExplicitHierarchy<CSVElement*>* hierarchy;
 	ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>* hierarchy_current_block;
-;
+
+	// Prehladavacie tabulky jednotlivych urovni UC
+	// TODO Zmenit na Treap
+	ds::adt::SortedSequenceTable<std::string, CSVElement*> kraje_table;
+	ds::adt::SortedSequenceTable<std::string, CSVElement*> okresy_table;
+	ds::adt::SortedSequenceTable<std::string, CSVElement*> obce_table;
+
+	ds::adt::SortedSequenceTable<std::string, ds::adt::ImplicitList<int>*> vzdelanie_table;
 
 	void fill();
-	void loadCSV(const std::string& path, ImplicitList<CSVElement*>& data, std::string UC_type);
+	void loadCSV(const std::string& path, std::function<void(ds::adt::ImplicitList<std::string> content)> insert_function);
 	Searcher<ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator, std::string(CSVElement::*)()> searcher;
 	std::wstring to_wstring(std::string const& s);
 	std::string to_string(std::wstring const& s);

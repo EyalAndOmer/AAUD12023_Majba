@@ -141,7 +141,6 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Searcher.h" />
-    <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="main_form.resx">

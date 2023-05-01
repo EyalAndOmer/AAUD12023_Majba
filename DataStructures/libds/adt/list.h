@@ -54,6 +54,7 @@ namespace ds::adt {
         T accessFirst() override;
         T accessLast() override;
         T access(size_t index) override;
+        T* accessRefference(size_t index);
 
         void insertFirst(T element) override;
         void insertLast(T element) override;
@@ -65,7 +66,7 @@ namespace ds::adt {
         void removeLast() override;
         void remove(size_t index) override;
 
-        T operator[](std::size_t index);
+        T& operator[](std::size_t index);
 
         IteratorType begin();
         IteratorType end();
@@ -80,6 +81,9 @@ namespace ds::adt {
     class ImplicitList :
         public GeneralList<T, amt::IS<T>>
     {
+    public:
+        ImplicitList();
+        ImplicitList(std::initializer_list<T> elements);
     };
 
     //----------
@@ -131,7 +135,16 @@ namespace ds::adt {
     {
         for (const auto& element : elements)
         {
-	        insertLast(element);
+            insertLast(element);
+        }
+    }
+
+    template <typename T>
+    ImplicitList<T>::ImplicitList(std::initializer_list<T> elements)
+    {
+        for (const auto& element : elements)
+        {
+            insertLast(element);
         }
     }
 
@@ -150,27 +163,21 @@ namespace ds::adt {
     template<typename T, typename SequenceType>
     size_t GeneralList<T, SequenceType>::calculateIndex(T element)
     {
-        size_t index = 0;
-        auto block = this->getSequence()->findBlockWithProperty([&](typename SequenceType::BlockType* searchedBlock)
-        {
-            if (searchedBlock->data_ == element)
+        size_t result = 0;
+        typename SequenceType::BlockType* block = this->getSequence()->findBlockWithProperty(
+            [&](typename SequenceType::BlockType* b)
             {
-                return true;
-            }
-            else
-            {
-                ++index;
-                return false;
-            }
-        });
-
-        if (block != nullptr)
-        {
-            return index;
-        }
-
-        return INVALID_INDEX;
-
+                if (b->data_ == element)
+                {
+                    return true;
+                }
+                else
+                {
+                    result++;
+                    return false;
+                }
+            });
+        return block != nullptr ? result : INVALID_INDEX;
     }
 
     template<typename T, typename SequenceType>
@@ -210,6 +217,18 @@ namespace ds::adt {
             this->error("Invalid index");
         }
         return block->data_;
+    }
+
+    // Specialna metoda pre vratenie ukazovatela na dany prvok v zozname, potrebna pre modifikaciu value listu na indexe cez operator[]
+    template<typename T, typename SequenceType>
+    T* GeneralList<T, SequenceType>::accessRefference(size_t index)
+    {
+        auto block = this->getSequence()->access(index);
+        if (block == nullptr)
+        {
+            this->error("Invalid index");
+        }
+        return &block->data_;
     }
 
     template<typename T, typename SequenceType>
@@ -276,9 +295,9 @@ namespace ds::adt {
     }
 
     template <typename T, typename SequenceType>
-    T GeneralList<T, SequenceType>::operator[](std::size_t index)
+    T& GeneralList<T, SequenceType>::operator[](std::size_t index)
     {
-        return this->access(index);
+        return *this->accessRefference(index);
     }
 
     template <typename T, typename SequenceType>
@@ -299,4 +318,7 @@ namespace ds::adt {
         // nemoze byt static cast, kvoli virtualnej dedicnosti(triangle of doom do googlu)
         return dynamic_cast<SequenceType*>(this->memoryStructure_);
     }
+
+    template <typename T>
+    ImplicitList<T>::ImplicitList() = default;
 }

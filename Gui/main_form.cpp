@@ -25,14 +25,14 @@ std::vector<std::unique_ptr<ds::tests::Test>> createTests()
 	//04
 	amt->add_test(std::make_unique<ds::tests::ExplicitSequenceTest>());
 
-	//
+	// 05
 	amt->add_test(std::make_unique<ds::tests::ImplicitHierarchyTest>());
 
 	// 06
 	 amt->add_test(std::make_unique<ds::tests::ExplicitHierarchyTest>());
 	 amt->add_test(std::make_unique<ds::tests::HierarchyTest>());
 
-	//// TODO 07
+	// 07
 	adt->add_test(std::make_unique<ds::tests::ListTest>());
 	adt->add_test(std::make_unique<ds::tests::ArraysTest>());
 	adt->add_test(std::make_unique<ds::tests::TreeTest>());
@@ -41,7 +41,7 @@ std::vector<std::unique_ptr<ds::tests::Test>> createTests()
 	//adt->add_test(std::make_unique<ds::tests::PriorityQueueTest>());
 
 	//// TODO 09
-	//adt->add_test(std::make_unique<ds::tests::SequenceTableTest>());
+	adt->add_test(std::make_unique<ds::tests::SequenceTableTest>());
 
  //   // TODO 11
 	//adt->add_test(std::make_unique<ds::tests::NonSequenceTableTest>());

@@ -7,7 +7,7 @@ template <typename Iterator, typename Attribute>
 class Searcher
 {
 private:
-	ImplicitList<CSVElement*> output;
+	ds::adt::ImplicitList<CSVElement*> output;
 
 
 public:
@@ -37,7 +37,7 @@ public:
 	}
 
 
-	ImplicitList<CSVElement*>& getOutput()
+	ds::adt::ImplicitList<CSVElement*>& getOutput()
 	{
 		return output;
 	}

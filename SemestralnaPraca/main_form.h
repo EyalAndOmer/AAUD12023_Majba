@@ -26,7 +26,12 @@ namespace Gui {
 			InitializeComponent();
 			this->myData = new SearchData();
 			writeDataToComboBox(cbSonsList, *myData->hierarchy_current_block->sons_);
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{"kraj", "okres", "obec"});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
+
+			// Pri starte nepovol pohyb po hierarchii, kedze je zvoleny tab 1
+			cbSonsList->Enabled = false;
+			btLowerLevel->Enabled = false;
+			btUpperLevel->Enabled = false;
 		}
 
 	protected:
@@ -78,6 +83,16 @@ namespace Gui {
 	private: System::Windows::Forms::ComboBox^ cbUCType2;
 
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::TextBox^ tbUCName;
+	private: System::Windows::Forms::ColumnHeader^ colNoEducationYoung;
+	private: System::Windows::Forms::ColumnHeader^ colBasicEducation;
+	private: System::Windows::Forms::ColumnHeader^ colHighNotFinishedEducation;
+	private: System::Windows::Forms::ColumnHeader^ colHighEducation;
+	private: System::Windows::Forms::ColumnHeader^ colHigherEducation;
+	private: System::Windows::Forms::ColumnHeader^ colUniversityEducation;
+	private: System::Windows::Forms::ColumnHeader^ colNoEducation;
+	private: System::Windows::Forms::CheckBox^ checkBox1;
 
 
 
@@ -116,6 +131,13 @@ namespace Gui {
 			this->colShortestName = (gcnew System::Windows::Forms::ColumnHeader());
 			this->colCode = (gcnew System::Windows::Forms::ColumnHeader());
 			this->ColNote = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colNoEducationYoung = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colBasicEducation = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colHighNotFinishedEducation = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colHighEducation = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colHigherEducation = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colUniversityEducation = (gcnew System::Windows::Forms::ColumnHeader());
+			this->colNoEducation = (gcnew System::Windows::Forms::ColumnHeader());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->cbSelectField = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -128,10 +150,13 @@ namespace Gui {
 			this->btUCType = (gcnew System::Windows::Forms::Button());
 			this->mainTabs = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->tbUCName = (gcnew System::Windows::Forms::TextBox());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
-			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			this->cbUCType2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->mainTabs->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
@@ -139,28 +164,26 @@ namespace Gui {
 			// 
 			// lSearchAlgorithm
 			// 
-			this->lSearchAlgorithm->Location = System::Drawing::Point(21, 54);
+			this->lSearchAlgorithm->Location = System::Drawing::Point(299, 59);
 			this->lSearchAlgorithm->Name = L"lSearchAlgorithm";
 			this->lSearchAlgorithm->Size = System::Drawing::Size(179, 13);
 			this->lSearchAlgorithm->TabIndex = 0;
 			this->lSearchAlgorithm->Text = L"Vyberte vyhladaci algoritmus";
-			this->lSearchAlgorithm->Click += gcnew System::EventHandler(this, &main_form::label2_Click);
 			// 
 			// cbSearchAlgorithm
 			// 
 			this->cbSearchAlgorithm->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->cbSearchAlgorithm->FormattingEnabled = true;
 			this->cbSearchAlgorithm->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Zo zaciatku", L"V celom slove" });
-			this->cbSearchAlgorithm->Location = System::Drawing::Point(21, 69);
+			this->cbSearchAlgorithm->Location = System::Drawing::Point(299, 74);
 			this->cbSearchAlgorithm->Name = L"cbSearchAlgorithm";
 			this->cbSearchAlgorithm->Size = System::Drawing::Size(179, 21);
 			this->cbSearchAlgorithm->TabIndex = 2;
-			this->cbSearchAlgorithm->SelectedIndexChanged += gcnew System::EventHandler(this, &main_form::cbSearchAlgorithm_SelectedIndexChanged);
 			// 
 			// lSearchBox
 			// 
 			this->lSearchBox->AutoSize = true;
-			this->lSearchBox->Location = System::Drawing::Point(448, 8);
+			this->lSearchBox->Location = System::Drawing::Point(524, 8);
 			this->lSearchBox->Name = L"lSearchBox";
 			this->lSearchBox->Size = System::Drawing::Size(157, 13);
 			this->lSearchBox->TabIndex = 3;
@@ -168,16 +191,16 @@ namespace Gui {
 			// 
 			// tbSearch
 			// 
-			this->tbSearch->Location = System::Drawing::Point(451, 25);
+			this->tbSearch->Location = System::Drawing::Point(527, 25);
 			this->tbSearch->Name = L"tbSearch";
 			this->tbSearch->Size = System::Drawing::Size(183, 20);
 			this->tbSearch->TabIndex = 4;
 			// 
 			// buttonSearch
 			// 
-			this->buttonSearch->Location = System::Drawing::Point(564, 104);
+			this->buttonSearch->Location = System::Drawing::Point(560, 100);
 			this->buttonSearch->Name = L"buttonSearch";
-			this->buttonSearch->Size = System::Drawing::Size(172, 31);
+			this->buttonSearch->Size = System::Drawing::Size(170, 30);
 			this->buttonSearch->TabIndex = 5;
 			this->buttonSearch->Text = L"Vyhladat";
 			this->buttonSearch->UseVisualStyleBackColor = true;
@@ -188,14 +211,17 @@ namespace Gui {
 			this->lvSearchOutput->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->lvSearchOutput->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(5) {
+			this->lvSearchOutput->AutoArrange = false;
+			this->lvSearchOutput->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(12) {
 				this->colLongName,
-					this->colShorterName, this->colShortestName, this->colCode, this->ColNote
+					this->colShorterName, this->colShortestName, this->colCode, this->ColNote, this->colNoEducationYoung, this->colBasicEducation,
+					this->colHighNotFinishedEducation, this->colHighEducation, this->colHigherEducation, this->colUniversityEducation, this->colNoEducation
 			});
+			this->lvSearchOutput->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
 			this->lvSearchOutput->HideSelection = false;
-			this->lvSearchOutput->Location = System::Drawing::Point(274, 215);
+			this->lvSearchOutput->Location = System::Drawing::Point(16, 215);
 			this->lvSearchOutput->Name = L"lvSearchOutput";
-			this->lvSearchOutput->Size = System::Drawing::Size(758, 215);
+			this->lvSearchOutput->Size = System::Drawing::Size(1015, 215);
 			this->lvSearchOutput->TabIndex = 6;
 			this->lvSearchOutput->UseCompatibleStateImageBehavior = false;
 			this->lvSearchOutput->View = System::Windows::Forms::View::Details;
@@ -223,12 +249,39 @@ namespace Gui {
 			// ColNote
 			// 
 			this->ColNote->Text = L"Poznamka";
-			this->ColNote->Width = 173;
+			// 
+			// colNoEducationYoung
+			// 
+			this->colNoEducationYoung->Text = L"bez ukončeného vzdelania – osoby vo veku 0-14 rokov";
+			// 
+			// colBasicEducation
+			// 
+			this->colBasicEducation->Text = L"základné vzdelanie";
+			// 
+			// colHighNotFinishedEducation
+			// 
+			this->colHighNotFinishedEducation->Text = L"stredné odborné (učňovské) vzdelanie (bez maturity)";
+			// 
+			// colHighEducation
+			// 
+			this->colHighEducation->Text = L"úplné stredné vzdelanie";
+			// 
+			// colHigherEducation
+			// 
+			this->colHigherEducation->Text = L"vyššie odborné vzdelanie";
+			// 
+			// colUniversityEducation
+			// 
+			this->colUniversityEducation->Text = L"vysokoškolské vzdelanie";
+			// 
+			// colNoEducation
+			// 
+			this->colNoEducation->Text = L"bez školského vzdelania – osoby vo veku 15 rokov a viac";
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(220, 9);
+			this->label1->Location = System::Drawing::Point(296, 9);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(184, 13);
 			this->label1->TabIndex = 7;
@@ -246,7 +299,7 @@ namespace Gui {
 				L"Cele meno", L"Skratene meno", L"Kratke meno",
 					L"Kod", L"Poznamka"
 			});
-			this->cbSelectField->Location = System::Drawing::Point(223, 24);
+			this->cbSelectField->Location = System::Drawing::Point(299, 24);
 			this->cbSelectField->Name = L"cbSelectField";
 			this->cbSelectField->Size = System::Drawing::Size(181, 21);
 			this->cbSelectField->TabIndex = 8;
@@ -303,7 +356,7 @@ namespace Gui {
 			// lbUCType
 			// 
 			this->lbUCType->AutoSize = true;
-			this->lbUCType->Location = System::Drawing::Point(13, 17);
+			this->lbUCType->Location = System::Drawing::Point(18, 8);
 			this->lbUCType->Name = L"lbUCType";
 			this->lbUCType->Size = System::Drawing::Size(145, 13);
 			this->lbUCType->TabIndex = 15;
@@ -313,16 +366,16 @@ namespace Gui {
 			// 
 			this->cbUCType->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->cbUCType->FormattingEnabled = true;
-			this->cbUCType->Location = System::Drawing::Point(16, 33);
+			this->cbUCType->Location = System::Drawing::Point(21, 24);
 			this->cbUCType->Name = L"cbUCType";
 			this->cbUCType->Size = System::Drawing::Size(179, 21);
 			this->cbUCType->TabIndex = 14;
 			// 
 			// btUCType
 			// 
-			this->btUCType->Location = System::Drawing::Point(583, 102);
+			this->btUCType->Location = System::Drawing::Point(560, 100);
 			this->btUCType->Name = L"btUCType";
-			this->btUCType->Size = System::Drawing::Size(154, 33);
+			this->btUCType->Size = System::Drawing::Size(170, 30);
 			this->btUCType->TabIndex = 17;
 			this->btUCType->Text = L"Zobrazit";
 			this->btUCType->UseVisualStyleBackColor = true;
@@ -342,6 +395,8 @@ namespace Gui {
 			// 
 			// tabPage1
 			// 
+			this->tabPage1->Controls->Add(this->label4);
+			this->tabPage1->Controls->Add(this->tbUCName);
 			this->tabPage1->Controls->Add(this->cbUCType);
 			this->tabPage1->Controls->Add(this->btUCType);
 			this->tabPage1->Controls->Add(this->lbUCType);
@@ -350,11 +405,28 @@ namespace Gui {
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
 			this->tabPage1->Size = System::Drawing::Size(754, 141);
 			this->tabPage1->TabIndex = 0;
-			this->tabPage1->Text = L"Prehladavanie";
+			this->tabPage1->Text = L"Konkretne vyhladavanie";
 			this->tabPage1->UseVisualStyleBackColor = true;
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(224, 9);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(160, 13);
+			this->label4->TabIndex = 19;
+			this->label4->Text = L"Zadajte nazov uzemnej jednotky";
+			// 
+			// tbUCName
+			// 
+			this->tbUCName->Location = System::Drawing::Point(225, 25);
+			this->tbUCName->Name = L"tbUCName";
+			this->tbUCName->Size = System::Drawing::Size(181, 20);
+			this->tbUCName->TabIndex = 18;
 			// 
 			// tabPage2
 			// 
+			this->tabPage2->Controls->Add(this->checkBox1);
 			this->tabPage2->Controls->Add(this->cbUCType2);
 			this->tabPage2->Controls->Add(this->label3);
 			this->tabPage2->Controls->Add(this->cbSelectField);
@@ -372,14 +444,15 @@ namespace Gui {
 			this->tabPage2->Text = L"Bodove vyhladavanie";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			// 
-			// tabPage3
+			// checkBox1
 			// 
-			this->tabPage3->Location = System::Drawing::Point(4, 22);
-			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Size = System::Drawing::Size(754, 141);
-			this->tabPage3->TabIndex = 2;
-			this->tabPage3->Text = L"Filtrovanie";
-			this->tabPage3->UseVisualStyleBackColor = true;
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Location = System::Drawing::Point(21, 51);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(90, 17);
+			this->checkBox1->TabIndex = 18;
+			this->checkBox1->Text = L"Vybrat vsetky";
+			this->checkBox1->UseVisualStyleBackColor = true;
 			// 
 			// cbUCType2
 			// 
@@ -399,11 +472,20 @@ namespace Gui {
 			this->label3->TabIndex = 17;
 			this->label3->Text = L"Vyberte typ uzemnej jednotky";
 			// 
+			// tabPage3
+			// 
+			this->tabPage3->Location = System::Drawing::Point(4, 22);
+			this->tabPage3->Name = L"tabPage3";
+			this->tabPage3->Size = System::Drawing::Size(806, 141);
+			this->tabPage3->TabIndex = 2;
+			this->tabPage3->Text = L"Filtrovanie";
+			this->tabPage3->UseVisualStyleBackColor = true;
+			// 
 			// main_form
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1048, 436);
+			this->ClientSize = System::Drawing::Size(1047, 436);
 			this->Controls->Add(this->mainTabs);
 			this->Controls->Add(this->btLowerLevel);
 			this->Controls->Add(this->cbSonsList);
@@ -423,11 +505,6 @@ namespace Gui {
 
 		}
 #pragma endregion
-
-private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void cbSearchAlgorithm_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-}
 private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
 	// Definicia indexov pre comboboxy, potrebne pre kontrolu ci je nieco zvolene
 	int cbSearchAlgorithmIndex = cbSearchAlgorithm->SelectedIndex;
@@ -494,25 +571,45 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, nullptr));
 
 
-		Searcher<ImplicitList<CSVElement*>::IteratorType, std::string(CSVElement::*)()> output_searcher;
+		Searcher<ds::adt::ImplicitList<CSVElement*>::IteratorType, std::string(CSVElement::*)()> output_searcher;
 		output_searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod,
 			myData->searcher.getOutput().begin(), myData->searcher.getOutput().end());
 
 		this->writeDataToTable(&output_searcher.getOutput());
 	}
 }
-void writeDataToTable(ImplicitList<CSVElement*>* outputElements)
+void writeDataToTable(ds::adt::ImplicitList<CSVElement*>* outputElements)
 {
 	lvSearchOutput->Items->Clear();
 	for (auto item : *outputElements)
 	{
-		ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(item->get_official_title().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->get_medium_title().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->get_short_title().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->get_code().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->get_note().c_str()));
-		lvSearchOutput->Items->Add(listViewItem);
+		writeDataToTable(*item);
 	}
+}
+
+void writeDataToTable(CSVElement& element)
+{
+	std::cout << element.get_has_education() << '\n';
+
+	lvSearchOutput->Items->Clear();
+	ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(element.get_official_title().c_str()));
+	listViewItem->SubItems->Add(gcnew String(element.get_medium_title().c_str()));
+	listViewItem->SubItems->Add(gcnew String(element.get_short_title().c_str()));
+	listViewItem->SubItems->Add(gcnew String(element.get_code().c_str()));
+	listViewItem->SubItems->Add(gcnew String(element.get_note().c_str()));
+
+	if (element.get_has_education())
+	{
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_no_education_young()).c_str()));
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_basic_education()).c_str()));
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_high_lower_education()).c_str()));
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_high_higher_education()).c_str()));
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_higher_education()).c_str()));
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_university_education()).c_str()));
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_no_education_old()).c_str()));
+		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_not_clarified()).c_str()));
+	}
+	lvSearchOutput->Items->Add(listViewItem);
 }
 
 void writeDataToTable(ds::amt::ImplicitSequence<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>* outputElements)
@@ -520,16 +617,11 @@ void writeDataToTable(ds::amt::ImplicitSequence<ds::amt::MultiWayExplicitHierarc
 	lvSearchOutput->Items->Clear();
 	for (auto item : *outputElements)
 	{
-		ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(item->data_->get_official_title().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->data_->get_medium_title().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->data_->get_short_title().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->data_->get_code().c_str()));
-		listViewItem->SubItems->Add(gcnew String(item->data_->get_note().c_str()));
-		lvSearchOutput->Items->Add(listViewItem);
+		writeDataToTable(*item->data_);
 	}
 }
 
-void writeDataToComboBox(ComboBox^ comboBox, ImplicitList<std::string>& elements)
+void writeDataToComboBox(ComboBox^ comboBox, ds::adt::ImplicitList<std::string>& elements)
 {
 	for (auto item : elements)
 	{
@@ -559,15 +651,15 @@ private: System::Void btUpperLevel_Click(System::Object^ sender, System::EventAr
 		// Zmena obsahu cb uzemneho celku
 		if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
 		{
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{"kraj", "okres", "obec"});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
 		}
 		else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
 		{
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{"okres", "obec"});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
 		}
 		else
 		{
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{"obec"});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
 		}
 	}
 }
@@ -592,32 +684,54 @@ private: System::Void btLowerLevel_Click(System::Object^ sender, System::EventAr
 			// Zmena obsahu cb uzemneho celku
 			if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
 			{
-				writeDataToComboBox(cbUCType, ImplicitList<std::string>{"okres", "obec"});
+				writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
 			} else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
 			{
-				writeDataToComboBox(cbUCType, ImplicitList<std::string>{"obec"});
+				writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
 			} else
 			{
-				writeDataToComboBox(cbUCType, ImplicitList<std::string>{""});
+				writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{""});
 			}
 		}
 	}
 }
 private: System::Void btUCType_Click(System::Object^ sender, System::EventArgs^ e) {
+	std::string nameUC = msclr::interop::marshal_as<std::string>(tbUCName->Text);
 	if (cbUCType->SelectedIndex == -1)
 	{
 		MessageBox::Show("Vyberte uzemnu jednotku, ktoru chcete zobrazit", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	} else if (nameUC == "") {
+		MessageBox::Show("Zadajte nazov uzemnej jednotky", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	} else
 	{
-		lvSearchOutput->Items->Clear();
-		this->myData->searcher.clear();
 		std::string selectedUC = msclr::interop::marshal_as<std::string>(cbUCType->SelectedItem->ToString());
+		CSVElement** foundElement = nullptr;
+		ds::adt::ImplicitList<CSVElement*>* foundElements = nullptr;
+		if (selectedUC == "kraj")
+		{
+			this->myData->kraje_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
+		} else if (selectedUC == "okres")
+		{
+			this->myData->okresy_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
+		} else
+		{
+			this->myData->obce_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
+		}
 
-		myData->searcher.search(selectedUC, myData->has_type, &CSVElement::get_UC_type,
-			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, myData->hierarchy_current_block),
-			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, nullptr));
-
-		this->writeDataToTable(&myData->searcher.getOutput());
+		if (foundElement == nullptr)
+		{
+			MessageBox::Show("UC so zadanym menom neexistuje", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		} else
+		{
+			if (foundElements == nullptr)
+			{
+				this->writeDataToTable(**foundElement);
+			} else
+			{
+				foundElements->insertLast(*foundElement);
+				this->writeDataToTable(foundElements);
+			}
+		}
 	}
 
 }
@@ -628,37 +742,50 @@ private: System::Void mainTabs_SelectedIndexChanged(System::Object^ sender, Syst
 		cbUCType->Items->Clear();
 		if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
 		{
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{"kraj", "okres", "obec"});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
 		} else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
 		{
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{"okres", "obec"});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
 		}
 		else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
 		{
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{"obec"});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
 		}
 		else
 		{
-			writeDataToComboBox(cbUCType, ImplicitList<std::string>{""});
+			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{""});
 		}
+
+		cbSonsList->Enabled = false;
+		btLowerLevel->Enabled = false;
+		btUpperLevel->Enabled = false;
 		break;
 	case 1:
 		cbUCType2->Items->Clear();
 		if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
 		{
-			writeDataToComboBox(cbUCType2, ImplicitList<std::string>{"kraj", "okres", "obec"});
+			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
 		} else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
 		{
-			writeDataToComboBox(cbUCType2, ImplicitList<std::string>{"okres", "obec"});
+			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"okres", "obec"});
 		}
 		else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
 		{
-			writeDataToComboBox(cbUCType2, ImplicitList<std::string>{"obec"});
+			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"obec"});
 		}
 		else
 		{
-			writeDataToComboBox(cbUCType2, ImplicitList<std::string>{""});
+			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{""});
 		}
+
+		cbSonsList->Enabled = true;
+		btLowerLevel->Enabled = true;
+		btUpperLevel->Enabled = true;
+		break;
+	case 2:
+		cbSonsList->Enabled = false;
+		btLowerLevel->Enabled = false;
+		btUpperLevel->Enabled = false;
 		break;
 	}
 }

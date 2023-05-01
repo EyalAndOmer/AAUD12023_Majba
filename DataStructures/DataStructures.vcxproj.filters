@@ -193,6 +193,9 @@
     <ClInclude Include="tests\adt\tree.test.h">
       <Filter>tests\adt</Filter>
     </ClInclude>
+    <ClInclude Include="complexities\TableAnalyzer.h">
+      <Filter>libds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

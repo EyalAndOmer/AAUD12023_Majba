@@ -14,6 +14,7 @@ namespace ds::adt {
     {
         K key_;
         T data_;
+        ImplicitList<T> elements_;
 
         bool operator==(const TableItem<K, T>& other) { return key_ == other.key_ && data_ == other.data_; }
     };
@@ -117,6 +118,8 @@ namespace ds::adt {
     public:
         void insert(K key, T data) override;
         T remove(K key) override;
+        void insertWithDuplicities(K key, T data);
+        bool tryFindWithDuplicities(K key, T*& data, ImplicitList<T>*& other_elements);
 
     protected:
         using BlockType = typename amt::IS<TabItem<K, T>>::BlockType;
@@ -310,10 +313,17 @@ namespace ds::adt {
     template<typename K, typename T, typename SequenceType>
     bool SequenceTable<K, T, SequenceType>::tryFind(K key, T*& data)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        auto* block = this->findBlockWithKey(key);
+
+		if (block == nullptr)
+		{
+            return false;
+		}
+
+        data = &block->data_.data_;
+        return true;
     }
+
 
     template <typename K, typename T, typename SequenceType>
     auto SequenceTable<K, T, SequenceType>::begin() -> IteratorType
@@ -338,9 +348,11 @@ namespace ds::adt {
     template<typename K, typename T, typename SequenceType>
     typename SequenceType::BlockType* UnsortedSequenceTable<K, T, SequenceType>::findBlockWithKey(K key)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        return this->getSequence()->findBlockWithProperty([&](SequenceType::BlockType* b) -> bool
+            {
+                return b->data_.key_ == key;
+            });
+
     }
 
     //----------
@@ -348,17 +360,31 @@ namespace ds::adt {
     template<typename K, typename T>
     void UnsortedImplicitSequenceTable<K, T>::insert(K key, T data)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        if (this->contains(key))
+        {
+            this->error("UnsortedImplicitSequenceTable<K, T>::insert key already exists");
+        }
+        this->getSequence()->insertLast().data_ = { key, data };
     }
 
     template<typename K, typename T>
     T UnsortedImplicitSequenceTable<K, T>::remove(K key)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        auto* block = this->findBlockWithKey(key);
+        if (block == nullptr)
+        {
+            this->error("UnsortedImplicitSequenceTable<K, T>::remove element with key not found");
+        }
+        T data = block->data_.data_;
+        auto* last_block = this->getSequence()->accessLast();
+
+        if (block != last_block)
+        {
+            std::swap(block->data_, last_block->data_);
+        }
+        this->getSequence()->removeLast();
+
+        return data;
     }
 
     //----------
@@ -366,17 +392,31 @@ namespace ds::adt {
     template<typename K, typename T>
     void UnsortedExplicitSequenceTable<K, T>::insert(K key, T data)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        if (this->contains(key))
+        {
+            this->error("UnsortedImplicitSequenceTable<K, T>::insert key already exists");
+        }
+        this->getSequence()->insertLast().data_ = { key, data };
     }
 
     template<typename K, typename T>
     T UnsortedExplicitSequenceTable<K, T>::remove(K key)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        auto* block = this->findBlockWithKey(key);
+        if (block == nullptr)
+        {
+            this->error("UnsortedImplicitSequenceTable<K, T>::remove element with key not found");
+        }
+        T data = block->data_.data_;
+        auto* first_block = this->getSequence()->accessFirst();
+
+        if (block != first_block)
+        {
+            std::swap(block->data_, first_block->data_);
+        }
+        this->getSequence()->removeFirst();
+
+        return data;
     }
 
     //----------
@@ -384,17 +424,99 @@ namespace ds::adt {
     template<typename K, typename T>
     void SortedSequenceTable<K, T>::insert(K key, T data)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        //BlockType* blockWithKey = nullptr;
+        //bool result = this->tryFindBlockWithKey(key, 0, this->size(), blockWithKey);
+        //if (blockWithKey == nullptr)
+        //{
+        //    this->getSequence()->insertFirst().data_ = { key, data };
+        //} else if (result == false)
+        //{
+        //    this->getSequence()->insertBefore(*blockWithKey).data_ = { key, data };
+        //} else
+        //{
+        //    this->error("SortedSequenceTable<K, T>::insert element with key exists");
+        //}
+
+        TableItem<K, T>* table_data;
+        if (this->isEmpty())
+        {
+            table_data = &(this->getSequence()->insertFirst().data_);
+        } else
+        {
+            BlockType* block_with_key = nullptr;
+
+        	if (this->tryFindBlockWithKey(key, 0, this->size(), block_with_key))
+            {
+                this->error("SortedSequenceTable<K, T>::insert element with key exists");
+            }
+
+            table_data = key > block_with_key->data_.key_ ? &this->getSequence()->insertAfter(*block_with_key).data_ : &this->getSequence()->insertBefore(*block_with_key).data_;
+        }
+        table_data->key_ = key;
+        table_data->data_ = data;
+    }
+
+    // Specialna metoda pre vkladanie prvkov s rovnakym klucom
+    template<typename K, typename T>
+    void SortedSequenceTable<K, T>::insertWithDuplicities(K key, T data)
+    {
+
+        TableItem<K, T>* table_data;
+        if (this->isEmpty())
+        {
+            table_data = &(this->getSequence()->insertFirst().data_);
+            table_data->key_ = key;
+            table_data->data_ = data;
+        }
+        else
+        {
+            BlockType* block_with_key = nullptr;
+
+            if (this->tryFindBlockWithKey(key, 0, this->size(), block_with_key))
+            {
+                (*block_with_key).data_.elements_.insertLast(data);
+            } else
+            {
+                table_data = key > block_with_key->data_.key_ ? &this->getSequence()->insertAfter(*block_with_key).data_ : &this->getSequence()->insertBefore(*block_with_key).data_;
+                table_data->key_ = key;
+                table_data->data_ = data;
+            }
+        }
+    }
+
+    template<typename K, typename T>
+    bool SortedSequenceTable<K, T>::tryFindWithDuplicities(K key, T*& data, ImplicitList<T>*& other_elements)
+    {
+        auto* block = this->findBlockWithKey(key);
+
+        if (block == nullptr)
+        {
+            return false;
+        }
+
+        data = &block->data_.data_;
+        other_elements = &block->data_.elements_;
+        return true;
     }
 
     template<typename K, typename T>
     T SortedSequenceTable<K, T>::remove(K key)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        BlockType* block_with_key = nullptr;
+        if (!tryFindBlockWithKey(key, 0, this->size(), block_with_key))
+        {
+            this->error("SortedSequenceTable<K, T>::remove block with key doesn't exist");
+        }
+        T result = block_with_key->data_.data_;
+        if (this->getSequence()->accessFirst() == block_with_key)
+        {
+            this->getSequence()->removeFirst();
+        } else
+        {
+            this->getSequence()->removeNext(*this->getSequence()->accessPrevious(*block_with_key));
+        }
+
+        return result;
     }
 
     template<typename K, typename T>
@@ -407,9 +529,55 @@ namespace ds::adt {
     template<typename K, typename T>
     bool SortedSequenceTable<K, T>::tryFindBlockWithKey(K key, size_t firstIndex, size_t lastIndex, BlockType*& lastBlock)
     {
-        // TODO 10
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+
+        //size_t midIndex = firstIndex + (lastIndex - firstIndex) / 2;
+        //BlockType* block = nullptr;
+        //while(firstIndex < lastIndex)
+        //{
+        //	block = this->getSequence()->access(midIndex);
+        //    if (key < block->data_.key_)
+        //    {
+        //        this->tryFindBlockWithKey(key, firstIndex, midIndex, lastBlock);
+        //    } else if (key > block->data_.key_)
+        //    {
+        //        this->tryFindBlockWithKey(key, midIndex, lastIndex, lastBlock);
+        //    } else
+        //    {
+        //        lastBlock = block;
+        //        return true;
+        //    }
+        //}
+        //lastBlock = block;
+        //return false;
+
+        if (this->isEmpty())
+        {
+            lastBlock = nullptr;
+            return false;
+        }
+
+        size_t midIndex = firstIndex;
+        BlockType* block = nullptr;
+        while (firstIndex < lastIndex)
+        {
+            midIndex = firstIndex + (lastIndex - firstIndex) / 2;
+            block = this->getSequence()->access(midIndex);
+            if (block->data_.key_ < key)
+            {
+                firstIndex = midIndex + 1;
+            }
+            else if (block->data_.key_ > key)
+            {
+                lastIndex = midIndex;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        lastBlock = this->getSequence()->access(midIndex);
+        return lastBlock->data_.key_ == key;
     }
 
     //----------
@@ -553,6 +721,7 @@ namespace ds::adt {
     HashTable<K, T>::HashTableIterator::~HashTableIterator()
     {
         delete tablesCurrent_;
+        delete tablesLast_;
         delete synonymIterator_;
     }
 
@@ -590,9 +759,8 @@ namespace ds::adt {
     template <typename K, typename T>
     TabItem<K, T>& HashTable<K, T>::HashTableIterator::operator*()
     {
-        return (**synonymIterator_).data_;
+        return (**synonymIterator_);
     }
-
     //----------
 
     template <typename K, typename T>
