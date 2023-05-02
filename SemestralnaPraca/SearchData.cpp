@@ -35,7 +35,7 @@ void SearchData::loadCSV(const std::string& path, std::function<void(ds::adt::Im
 	file.close();
 }
 
-// Metoda na naplnenie hierarchie
+// Metoda na naplnenie vsetkych udajovych struktur
 void SearchData::fill()
 {
 	// Zadefinovanie korena
@@ -44,27 +44,27 @@ void SearchData::fill()
 	root.data_ = new CSVElement(root_data);
 
 
-	// Nacitanie krajov
+	// Pomocna lambda funkcia, ktora sluzi na upravenie udajov a nasledne zavedenie vyvoreneho objektu CSVElement do udajovych struktur
 	std::function<void(ds::adt::ImplicitList<std::string>)> insert_kraj = [&](ds::adt::ImplicitList<std::string> content) {
+		// Nastavenie typu UC
 		content.insertLast("kraj");
 		// Zmazanie ID prvku
 		content.removeFirst();
+
 		auto element = new CSVElement(content);
 
+		// Pridanie do stromu a tabulky
 		auto* inserted_hierarchy_block = hierarchy->emplaceSon(*hierarchy->accessRoot(), hierarchy->degree(*hierarchy->accessRoot())).data_ = element;
 		this->kraje_table.insertWithDuplicities(inserted_hierarchy_block->get_official_title(), inserted_hierarchy_block);
 	};
 
-	ds::adt::ImplicitList<CSVElement*> kraje;
 	loadCSV("documents\\uroven_1\\data\\krajeUTF8.csv", insert_kraj);
 
-
-
 	// Nacitanie okresov
-	size_t son_order = 0;
-	std::string current_code = "";
-	ds::adt::ImplicitList<ds::amt::MemoryBlock<CSVElement*>*> all_okresy;
-	auto current_son = hierarchy->accessSon(*hierarchy->accessRoot(), 0);
+	int kraj_order = 0; // premenna na uchovanie indexu aktualne spracovaneho kraja
+	std::string current_code = ""; // premenna na uchovanie kodu aktualneho kraja
+	ds::adt::ImplicitList<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*> all_okresy; // list smernikov na vsetky vytvorene okresy v hierarchii
+	auto current_son = hierarchy->accessSon(*hierarchy->accessRoot(), 0); // premenna na uchovanie aktualne spracovaneho kraja
 
 	std::function<void(ds::adt::ImplicitList<std::string>)> insert_okres = [&](ds::adt::ImplicitList<std::string> content) {
 		content.insertLast("okres");
@@ -80,23 +80,22 @@ void SearchData::fill()
 			if (current_code != element->get_code().substr(0, 5))
 			{
 				current_code = element->get_code().substr(0, 5);
-				++son_order;
-				current_son = hierarchy->accessSon(*hierarchy->accessRoot(), son_order);
+				++kraj_order;
+				current_son = hierarchy->accessSon(*hierarchy->accessRoot(), kraj_order);
 			}
 		}
 
 		auto* inserted_hierarchy_block = hierarchy->emplaceSon(*current_son, hierarchy->degree(*current_son)).data_ = element;
 		this->okresy_table.insertWithDuplicities(inserted_hierarchy_block->get_official_title(), inserted_hierarchy_block);
-
 		all_okresy.insertLast(hierarchy->accessSon(*current_son, hierarchy->degree(*current_son) - 1));
 	};
 
 	loadCSV("documents\\uroven_1\\data\\okresyUTF8.csv", insert_okres);
 
 	// Nacitanie obci
-	size_t current_okres = 0;
+	int current_okres = 0;
 	current_code = all_okresy.accessFirst()->data_->get_code().substr(0, 6);
-	current_son = static_cast<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>(all_okresy.access(current_okres));
+	current_son = all_okresy.access(current_okres);
 
 	std::function<void(ds::adt::ImplicitList<std::string>)> insert_obec = [&](ds::adt::ImplicitList<std::string> content)
 	{
@@ -107,7 +106,7 @@ void SearchData::fill()
 		{
 			current_code = element->get_code().substr(0, 6);
 			++current_okres;
-			current_son = static_cast<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>(all_okresy.access(current_okres));
+			current_son = all_okresy.access(current_okres);
 		}
 		auto* inserted_hierarchy_block = hierarchy->emplaceSon(*current_son, hierarchy->degree(*current_son)).data_ = element;
 		this->obce_table.insertWithDuplicities(inserted_hierarchy_block->get_official_title(), inserted_hierarchy_block);
@@ -115,7 +114,7 @@ void SearchData::fill()
 
 	loadCSV("documents\\uroven_1\\data\\obceUTF8.csv", insert_obec);
 
-	// Nacitanie udajov o vzdelani
+	// Nacitanie udajov o vzdelani pre jednotlive obce
 	std::function<void(ds::adt::ImplicitList<std::string>)> insert_vzdelanie = [&](ds::adt::ImplicitList<std::string> content)
 	{
 		content.remove(1);
@@ -134,20 +133,36 @@ void SearchData::fill()
 
 	for (auto obec : obce_table)
 	{
+		// Pridanie vzdelania pre obec vo for each
 		ds::adt::ImplicitList<int>** found_data;
 		if (vzdelanie_table.tryFind(obec.data_->get_code(), found_data))
 		{
 			obec.data_->set_education(*found_data);
 		}
+
+		// Pridanie vzdelania do obci s rovnakym nazvom ako je nazov obce vo for each
+		if (!obec.elements_.isEmpty())
+		{
+			for (auto duplicite_obec: obec.elements_)
+			{
+				if (vzdelanie_table.tryFind(duplicite_obec->get_code(), found_data))
+				{
+					duplicite_obec->set_education(*found_data);
+				}
+			}
+		}
 	}
 
+	// Nacitanie udajov o vzdelani pre jednotlive okresy
 	for (auto okres : all_okresy)
 	{
 		ds::adt::ImplicitList<int> okres_vzdelavanie {0, 0, 0, 0, 0, 0, 0, 0};
-		for (auto it = static_cast<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>(okres)->sons_->begin(); it != static_cast<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>(okres)->sons_->end(); ++it)
+		bool change = false;
+		for (auto it = okres->sons_->begin(); it != okres->sons_->end(); ++it)
 		{
 			if ((*it)->data_->get_has_education())
 			{
+				change = true;
 				okres_vzdelavanie[0] += (*it)->data_->get_no_education_young();
 				okres_vzdelavanie[1] += (*it)->data_->get_basic_education();
 				okres_vzdelavanie[2] += (*it)->data_->get_high_lower_education();
@@ -158,24 +173,38 @@ void SearchData::fill()
 				okres_vzdelavanie[7] += (*it)->data_->get_not_clarified();
 			}
 		}
-		okres->data_->set_education(&okres_vzdelavanie);
+		// Udaje o vzdelani nastav iba ak aspon jeden vrchol syna obsahuje udaje o vzdelavani
+		if (change)
+		{
+			okres->data_->set_education(&okres_vzdelavanie);
+		}
 	}
 
+
+	// Nacitanie udajov o vzdelani pre jednotlive kraje
 	for (auto it = root.sons_->begin(); it != root.sons_->end(); ++it)
 	{
 		ds::adt::ImplicitList<int> kraj_vzdelavanie{ 0, 0, 0, 0, 0, 0, 0, 0 };
-		for (auto it_kraj = (*it)->sons_->begin(); it_kraj != (*it)->sons_->end(); ++it_kraj)
+		bool change = false;
+		for (auto it_okres = (*it)->sons_->begin(); it_okres != (*it)->sons_->end(); ++it_okres)
 		{
-			kraj_vzdelavanie[0] += (*it_kraj)->data_->get_no_education_young();
-			kraj_vzdelavanie[1] += (*it_kraj)->data_->get_basic_education();
-			kraj_vzdelavanie[2] += (*it_kraj)->data_->get_high_lower_education();
-			kraj_vzdelavanie[3] += (*it_kraj)->data_->get_high_higher_education();
-			kraj_vzdelavanie[4] += (*it_kraj)->data_->get_higher_education();
-			kraj_vzdelavanie[5] += (*it_kraj)->data_->get_university_education();
-			kraj_vzdelavanie[6] += (*it_kraj)->data_->get_no_education_old();
-			kraj_vzdelavanie[7] += (*it_kraj)->data_->get_not_clarified();
+			if ((*it_okres)->data_->get_has_education())
+			{
+				change = true;
+				kraj_vzdelavanie[0] += (*it_okres)->data_->get_no_education_young();
+				kraj_vzdelavanie[1] += (*it_okres)->data_->get_basic_education();
+				kraj_vzdelavanie[2] += (*it_okres)->data_->get_high_lower_education();
+				kraj_vzdelavanie[3] += (*it_okres)->data_->get_high_higher_education();
+				kraj_vzdelavanie[4] += (*it_okres)->data_->get_higher_education();
+				kraj_vzdelavanie[5] += (*it_okres)->data_->get_university_education();
+				kraj_vzdelavanie[6] += (*it_okres)->data_->get_no_education_old();
+				kraj_vzdelavanie[7] += (*it_okres)->data_->get_not_clarified();
+			}
 		}
-		(*it)->data_->set_education(&kraj_vzdelavanie);
+		if (change)
+		{
+			(*it)->data_->set_education(&kraj_vzdelavanie);
+		}
 	}
 
 }

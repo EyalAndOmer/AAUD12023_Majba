@@ -92,7 +92,8 @@ namespace Gui {
 	private: System::Windows::Forms::ColumnHeader^ colHigherEducation;
 	private: System::Windows::Forms::ColumnHeader^ colUniversityEducation;
 	private: System::Windows::Forms::ColumnHeader^ colNoEducation;
-	private: System::Windows::Forms::CheckBox^ checkBox1;
+	private: System::Windows::Forms::CheckBox^ checkSelectAllUC;
+
 
 
 
@@ -153,7 +154,7 @@ namespace Gui {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->tbUCName = (gcnew System::Windows::Forms::TextBox());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->checkSelectAllUC = (gcnew System::Windows::Forms::CheckBox());
 			this->cbUCType2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
@@ -426,7 +427,7 @@ namespace Gui {
 			// 
 			// tabPage2
 			// 
-			this->tabPage2->Controls->Add(this->checkBox1);
+			this->tabPage2->Controls->Add(this->checkSelectAllUC);
 			this->tabPage2->Controls->Add(this->cbUCType2);
 			this->tabPage2->Controls->Add(this->label3);
 			this->tabPage2->Controls->Add(this->cbSelectField);
@@ -444,15 +445,16 @@ namespace Gui {
 			this->tabPage2->Text = L"Bodove vyhladavanie";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			// 
-			// checkBox1
+			// checkSelectAllUC
 			// 
-			this->checkBox1->AutoSize = true;
-			this->checkBox1->Location = System::Drawing::Point(21, 51);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(90, 17);
-			this->checkBox1->TabIndex = 18;
-			this->checkBox1->Text = L"Vybrat vsetky";
-			this->checkBox1->UseVisualStyleBackColor = true;
+			this->checkSelectAllUC->AutoSize = true;
+			this->checkSelectAllUC->Location = System::Drawing::Point(21, 51);
+			this->checkSelectAllUC->Name = L"checkSelectAllUC";
+			this->checkSelectAllUC->Size = System::Drawing::Size(90, 17);
+			this->checkSelectAllUC->TabIndex = 18;
+			this->checkSelectAllUC->Text = L"Vybrat vsetky";
+			this->checkSelectAllUC->UseVisualStyleBackColor = true;
+			this->checkSelectAllUC->CheckedChanged += gcnew System::EventHandler(this, &main_form::checkSelectAllUC_CheckedChanged);
 			// 
 			// cbUCType2
 			// 
@@ -476,7 +478,7 @@ namespace Gui {
 			// 
 			this->tabPage3->Location = System::Drawing::Point(4, 22);
 			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Size = System::Drawing::Size(806, 141);
+			this->tabPage3->Size = System::Drawing::Size(754, 141);
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Filtrovanie";
 			this->tabPage3->UseVisualStyleBackColor = true;
@@ -505,6 +507,8 @@ namespace Gui {
 
 		}
 #pragma endregion
+
+
 private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
 	// Definicia indexov pre comboboxy, potrebne pre kontrolu ci je nieco zvolene
 	int cbSearchAlgorithmIndex = cbSearchAlgorithm->SelectedIndex;
@@ -512,14 +516,15 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 	int cbUCTypeIndex = cbUCType2->SelectedIndex;
 	String^ tbSearchValue = tbSearch->Text;
 	bool passed = false;
+	bool search_all = false;
 
-	if (cbFieldSelectIndex == -1)
+	if (cbFieldSelectIndex == -1 && cbSelectField->Enabled)
 	{
 		MessageBox::Show("Vyberte pole nad ktorym chcete porovnavat.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else if (String::IsNullOrEmpty(tbSearchValue))
+	} else if (String::IsNullOrEmpty(tbSearchValue) && tbSearch->Enabled)
 	{
 		MessageBox::Show("Zadajte text na porovnanie.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else if (cbSearchAlgorithmIndex == -1)
+	} else if (cbSearchAlgorithmIndex == -1 && cbSearchAlgorithm->Enabled)
 	{
 		MessageBox::Show("Zvolte algoritmus pomocou ktoreho chcete vyhladavat.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	} else if (cbUCTypeIndex == -1)
@@ -530,39 +535,55 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 		passed = true;
 	}
 
+	if (cbSelectField->Enabled)
+	{
+		search_all = false;
+	} else
+	{
+		search_all = true;
+	}
+
 	if (passed)
 	{
 		lvSearchOutput->Items->Clear();
 		this->myData->searcher.clear();
 
-		// Ziskanie zadanych hodnot
-		std::string selectedAlgorithm = msclr::interop::marshal_as<std::string>(cbSearchAlgorithm->SelectedItem->ToString());
-		std::string selectedField = msclr::interop::marshal_as<std::string>(cbSelectField->SelectedItem->ToString());
+		std::string selectedAlgorithm;
+		std::string selectedField;
+		std::string substring;
+		std::string(CSVElement:: * selectedFieldMethod)();
+		std::function<bool(const std::string&, const std::string&)> selectedAlgorithmLambda;
+
 		std::string selectedUC = msclr::interop::marshal_as<std::string>(cbUCType2->SelectedItem->ToString());
-		std::string substring = msclr::interop::marshal_as<std::string>(tbSearchValue);
-
-		auto selectedAlgorithmLambda = selectedAlgorithm == "Zo zaciatku" ? myData->search_from_beginning : myData->search_substring;
-		ds::amt::ImplicitSequence<CSVElement*>* selectedFileData;
-
-
-		// Postupne ziskavanie a testovanie zapisanych hodnot
-		std::string(CSVElement::* selectedFieldMethod)();
-
-
-		if (selectedField == "Cele meno")
+		if (!search_all)
 		{
-			selectedFieldMethod = &CSVElement::get_official_title;
-		} else if (selectedField == "Skratene meno")
-		{
-			selectedFieldMethod = &CSVElement::get_medium_title;
-		} else if (selectedField == "Kratke meno")
-		{
-			selectedFieldMethod = &CSVElement::get_short_title;
-		} else if (selectedField == "Kod")
-		{
-			selectedFieldMethod = &CSVElement::get_code;
-		} else {
-			selectedFieldMethod = &CSVElement::get_note;
+			// Ziskanie zadanych hodnot
+			selectedAlgorithm = msclr::interop::marshal_as<std::string>(cbSearchAlgorithm->SelectedItem->ToString());
+			selectedField = msclr::interop::marshal_as<std::string>(cbSelectField->SelectedItem->ToString());
+			substring = msclr::interop::marshal_as<std::string>(tbSearchValue);
+
+			selectedAlgorithmLambda = selectedAlgorithm == "Zo zaciatku" ? myData->search_from_beginning : myData->search_substring;
+
+
+			if (selectedField == "Cele meno")
+			{
+				selectedFieldMethod = &CSVElement::get_official_title;
+			}
+			else if (selectedField == "Skratene meno")
+			{
+				selectedFieldMethod = &CSVElement::get_medium_title;
+			}
+			else if (selectedField == "Kratke meno")
+			{
+				selectedFieldMethod = &CSVElement::get_short_title;
+			}
+			else if (selectedField == "Kod")
+			{
+				selectedFieldMethod = &CSVElement::get_code;
+			}
+			else {
+				selectedFieldMethod = &CSVElement::get_note;
+			}
 		}
 
 		// Zavolanie samotnej search metody
@@ -570,12 +591,18 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, myData->hierarchy_current_block),
 			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, nullptr));
 
+		if (!search_all)
+		{
+			Searcher<ds::adt::ImplicitList<CSVElement*>::IteratorType, std::string(CSVElement::*)()> output_searcher;
 
-		Searcher<ds::adt::ImplicitList<CSVElement*>::IteratorType, std::string(CSVElement::*)()> output_searcher;
-		output_searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod,
-			myData->searcher.getOutput().begin(), myData->searcher.getOutput().end());
+			output_searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod,
+				myData->searcher.getOutput().begin(), myData->searcher.getOutput().end());
 
-		this->writeDataToTable(&output_searcher.getOutput());
+			this->writeDataToTable(&output_searcher.getOutput());
+		} else
+		{
+			this->writeDataToTable(&myData->searcher.getOutput());
+		}
 	}
 }
 void writeDataToTable(ds::adt::ImplicitList<CSVElement*>* outputElements)
@@ -589,15 +616,11 @@ void writeDataToTable(ds::adt::ImplicitList<CSVElement*>* outputElements)
 
 void writeDataToTable(CSVElement& element)
 {
-	std::cout << element.get_has_education() << '\n';
-
-	lvSearchOutput->Items->Clear();
 	ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(element.get_official_title().c_str()));
 	listViewItem->SubItems->Add(gcnew String(element.get_medium_title().c_str()));
 	listViewItem->SubItems->Add(gcnew String(element.get_short_title().c_str()));
 	listViewItem->SubItems->Add(gcnew String(element.get_code().c_str()));
 	listViewItem->SubItems->Add(gcnew String(element.get_note().c_str()));
-
 	if (element.get_has_education())
 	{
 		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_no_education_young()).c_str()));
@@ -723,13 +746,14 @@ private: System::Void btUCType_Click(System::Object^ sender, System::EventArgs^ 
 			MessageBox::Show("UC so zadanym menom neexistuje", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		} else
 		{
-			if (foundElements == nullptr)
+			if (foundElements->isEmpty())
 			{
+				lvSearchOutput->Items->Clear();
 				this->writeDataToTable(**foundElement);
 			} else
 			{
-				foundElements->insertLast(*foundElement);
 				this->writeDataToTable(foundElements);
+				this->writeDataToTable(**foundElement);
 			}
 		}
 	}
@@ -787,6 +811,19 @@ private: System::Void mainTabs_SelectedIndexChanged(System::Object^ sender, Syst
 		btLowerLevel->Enabled = false;
 		btUpperLevel->Enabled = false;
 		break;
+	}
+}
+private: System::Void checkSelectAllUC_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (checkSelectAllUC->Checked)
+	{
+		cbSelectField->Enabled = false;
+		cbSearchAlgorithm->Enabled = false;
+		tbSearch->Enabled = false;
+	} else
+	{
+		cbSelectField->Enabled = true;
+		cbSearchAlgorithm->Enabled = true;
+		tbSearch->Enabled = true;
 	}
 }
 };
