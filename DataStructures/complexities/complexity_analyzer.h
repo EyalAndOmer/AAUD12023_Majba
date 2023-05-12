@@ -105,6 +105,9 @@ namespace ds::utils
         virtual void beforeOperation(Structure& structure) {};
         virtual void executeOperation(Structure& structure) = 0;
         virtual void afterOperation(Structure& structure) {};
+        virtual void beforReplication(Structure& structure) {};
+        virtual void afterReplication(Structure& structure) {};
+
 
     private:
         using duration_t = std::chrono::nanoseconds;
@@ -154,9 +157,10 @@ namespace ds::utils
         for (int replikacia = 0; replikacia < getReplicationCount(); ++replikacia) {
             // V kazdej replikacii vytvorim strukturu
             Structure structure(structurePrototype);
+            this->beforReplication(structure);
             // Pre danu strukturu idem robit merania cez vsetky kroky
             // Pre prazdnu strukturu je beh zbytovny, pre remove aj zly, cize ideme od step = 1
-            for (int step = 1; step < getStepCount(); ++step) {
+            for (int step = 1; step <= getStepCount(); ++step) {
                 // Urci pocet kolko musis vlozit
                 // step * getStepSize() je max pocet prvkov
                 // structure.size() aktualny pocet prvkov
@@ -186,10 +190,12 @@ namespace ds::utils
                 // Zapisanie samotneho casu do mapy
                 data[step * getStepSize()].push_back(duration);
             }
+            this->afterReplication(structure);
+
+            std::cout << "Replication " << replikacia << "/" << getReplicationCount() << '\n';
         }
 
         saveToCsvFile(data);
-
         // Nastavenie success na true
         setSuccess();
     }

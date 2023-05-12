@@ -66,6 +66,7 @@ namespace ds::adt {
         void removeLast() override;
         void remove(size_t index) override;
 
+        // Spomenut v dokumentacii
         T& operator[](std::size_t index);
 
         IteratorType begin();
@@ -214,7 +215,7 @@ namespace ds::adt {
         auto block = this->getSequence()->access(index);
         if (block == nullptr)
         {
-            this->error("Invalid index");
+            this->error("T GeneralList<T, SequenceType>::access Invalid index");
         }
         return block->data_;
     }
@@ -226,7 +227,7 @@ namespace ds::adt {
         auto block = this->getSequence()->access(index);
         if (block == nullptr)
         {
-            this->error("Invalid index");
+            this->error("T* GeneralList<T, SequenceType>::accessRefference Invalid index");
         }
         return &block->data_;
     }
@@ -248,7 +249,7 @@ namespace ds::adt {
     {
         if (index < 0 || index > this->size())
         {
-            this->error("Invalid index");
+            this->error(" void GeneralList<T, SequenceType>::insert Invalid index");
         }
         this->getSequence()->insert(index).data_ = element;
     }
@@ -258,7 +259,7 @@ namespace ds::adt {
     {
         if (index < 0 || index >= this->size())
         {
-            this->error("Invalid index");
+            this->error("void GeneralList<T, SequenceType>::set Invalid index");
         }
 
         this->getSequence()->access(index)->data_ = element;
@@ -279,7 +280,7 @@ namespace ds::adt {
     {
         if (this->isEmpty())
         {
-            this->error("Sequence is empty");
+            this->error("void GeneralList<T, SequenceType>::removeLast Sequence is empty");
         }
         this->getSequence()->removeLast();
     }
@@ -289,7 +290,7 @@ namespace ds::adt {
     {
         if (index < 0 || index > this->size())
         {
-            this->error("Invalid index");
+            this->error("void GeneralList<T, SequenceType>::remove Invalid index");
         }
         this->getSequence()->remove(index);
     }

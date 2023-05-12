@@ -141,13 +141,13 @@ void SearchData::fill()
 		}
 
 		// Pridanie vzdelania do obci s rovnakym nazvom ako je nazov obce vo for each
-		if (!obec.elements_.isEmpty())
+		if (!obec.elements_->isEmpty())
 		{
-			for (auto duplicite_obec: obec.elements_)
+			for (auto duplicite_obec = obec.elements_->begin(); duplicite_obec != obec.elements_->end(); ++duplicite_obec)
 			{
-				if (vzdelanie_table.tryFind(duplicite_obec->get_code(), found_data))
+				if (vzdelanie_table.tryFind((*duplicite_obec)->get_code(), found_data))
 				{
-					duplicite_obec->set_education(*found_data);
+					(*duplicite_obec)->set_education(*found_data);
 				}
 			}
 		}
@@ -227,10 +227,29 @@ SearchData::~SearchData()
 
 	delete hierarchy;
 
+	for (auto element : kraje_table)
+	{
+		delete element.elements_;
+	}
+
+	for (auto element : okresy_table)
+	{
+		delete element.elements_;
+	}
+
+	for (auto element : obce_table)
+	{
+		delete element.elements_;
+	}
+
 	for (auto element : vzdelanie_table)
 	{
 		delete element.data_;
 	}
+
+
+
+
 
 	hierarchy = nullptr;
 	hierarchy_current_block = nullptr;

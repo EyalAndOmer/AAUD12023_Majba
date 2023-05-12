@@ -26,12 +26,11 @@ public:
 	ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>* hierarchy_current_block;
 
 	// Prehladavacie tabulky jednotlivych urovni UC
-	// TODO Zmenit na Treap
-	ds::adt::SortedSequenceTable<std::string, CSVElement*> kraje_table;
-	ds::adt::SortedSequenceTable<std::string, CSVElement*> okresy_table;
-	ds::adt::SortedSequenceTable<std::string, CSVElement*> obce_table;
+	ds::adt::Treap<std::string, CSVElement*> kraje_table;
+	ds::adt::Treap<std::string, CSVElement*> okresy_table;
+	ds::adt::Treap<std::string, CSVElement*> obce_table;
 
-	ds::adt::SortedSequenceTable<std::string, ds::adt::ImplicitList<int>*> vzdelanie_table;
+	ds::adt::Treap<std::string, ds::adt::ImplicitList<int>*> vzdelanie_table;
 
 	void fill();
 	void loadCSV(const std::string& path, std::function<void(ds::adt::ImplicitList<std::string> content)> insert_function);

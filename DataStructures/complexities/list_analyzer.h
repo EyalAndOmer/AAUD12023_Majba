@@ -89,59 +89,59 @@ namespace ds::utils
     {
     }
 
-            template<class List>
-            void ListAnalyzer<List>::beforeOperation(List& structure)
-            {
-                std::uniform_int_distribution<size_t> indexDist(0, structure.size() - 1);
-                index_ = indexDist(this->rngIndex_);
-                data_ = rngData_();
-            }
+        template<class List>
+        void ListAnalyzer<List>::beforeOperation(List& structure)
+        {
+            std::uniform_int_distribution<size_t> indexDist(0, structure.size() - 1);
+            index_ = indexDist(this->rngIndex_);
+            data_ = rngData_();
+        }
 
-            template<class List>
-            size_t ListAnalyzer<List>::getRandomIndex() const
-            {
-                return index_;
-            }
+        template<class List>
+        size_t ListAnalyzer<List>::getRandomIndex() const
+        {
+            return index_;
+        }
 
-            template<class List>
-            int ListAnalyzer<List>::getRandomData() const
-            {
-                return data_;
-            }
+        template<class List>
+        int ListAnalyzer<List>::getRandomData() const
+        {
+            return data_;
+        }
 
-            template<class List>
-            void ListAnalyzer<List>::insertNElements(List& list, size_t n)
+        template<class List>
+        void ListAnalyzer<List>::insertNElements(List& list, size_t n)
+        {
+            for (size_t i = 0; i < n; ++i)
             {
-                for (size_t i = 0; i < n; ++i)
-                {
-                    list.push_back(rngData_());
-                }
+                list.push_back(rngData_());
             }
+        }
 
-            template <class List>
-            ListInsertAnalyzer<List>::ListInsertAnalyzer(const std::string& name) :
-                ListAnalyzer<List>(name)
-            {
-            }
+        template <class List>
+        ListInsertAnalyzer<List>::ListInsertAnalyzer(const std::string& name) :
+            ListAnalyzer<List>(name)
+        {
+        }
 
-            template <class List>
-            void ListInsertAnalyzer<List>::executeOperation(List& structure)
-            {
-                auto data = this->getRandomData();
-                structure.insert(structure.begin(), data);
-            }
+        template <class List>
+        void ListInsertAnalyzer<List>::executeOperation(List& structure)
+        {
+            auto data = this->getRandomData();
+            structure.insert(structure.begin(), data);
+        }
 
-            template <class List>
-            ListRemoveAnalyzer<List>::ListRemoveAnalyzer(const std::string& name) :
-                ListAnalyzer<List>(name)
-            {
-            }
+        template <class List>
+        ListRemoveAnalyzer<List>::ListRemoveAnalyzer(const std::string& name) :
+            ListAnalyzer<List>(name)
+        {
+        }
 
-            template <class List>
-            void ListRemoveAnalyzer<List>::executeOperation(List& structure)
-            {
-                // analyzujeme meranie od zaciatku
-                // kontajner pracuje s iteratormi
-                structure.erase(structure.begin());
-            }
+        template <class List>
+        void ListRemoveAnalyzer<List>::executeOperation(List& structure)
+        {
+            // analyzujeme meranie od zaciatku
+            // kontajner pracuje s iteratormi
+            structure.erase(structure.begin());
+        }
 }

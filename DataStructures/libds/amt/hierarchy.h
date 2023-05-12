@@ -568,13 +568,13 @@ namespace ds::amt {
 	template <typename BlockType>
 	bool BinaryHierarchy<BlockType>::isLeftSon(const BlockType& node) const
 	{
-		return this->isNthSon(node, LEFT_SON_INDEX);
+		return node.parent_ != nullptr && this->accessLeftSon(*this->accessParent(node)) == &node;
 	}
 
 	template <typename BlockType>
 	bool BinaryHierarchy<BlockType>::isRightSon(const BlockType& node) const
 	{
-		return this->isNthSon(node, RIGHT_SON_INDEX);
+		return node.parent_ != nullptr && this->accessRightSon(*this->accessParent(node)) == &node;
 	}
 
 	template <typename BlockType>

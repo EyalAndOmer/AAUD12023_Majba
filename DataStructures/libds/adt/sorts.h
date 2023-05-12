@@ -156,10 +156,49 @@ namespace ds::adt
     template<typename T>
     void QuickSort<T>::quick(amt::ImplicitSequence<T>& is, std::function<bool(const T&, const T&)> compare, size_t min, size_t max)
     {
-        // TODO 12
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
+        size_t pivotIndex = min + (max - min) / 2;
+        T pivot = is.access(pivotIndex)->data_;
+
+        size_t leftIndex = min;
+        size_t rightIndex = max;
+
+        while (leftIndex <= rightIndex)
+        {
+	        while (compare(is.access((leftIndex))->data_, pivot))
+	        {
+                ++leftIndex;
+	        }
+
+            while (compare(pivot, is.access((rightIndex))->data_))
+            {
+                --rightIndex;
+            }
+
+            if (leftIndex <= rightIndex)
+            {
+                std::swap(is.access(leftIndex)->data_, is.access(rightIndex)->data_);
+                ++leftIndex;
+                --rightIndex;
+            }
+
+        }
+
+        if (min < rightIndex)
+        {
+            quick(is, compare, min, rightIndex);}
+
+        if (leftIndex < max)
+        {
+            quick(is, compare, leftIndex, max);
+        }
     }
+
+    // Custom comparator
+
+    //bool myComparator = [](auto const& uzem_jednotka, auto const& uzem_jednotka -> bool
+    //{
+    //    return l < r;
+    //}
 
     template<typename T>
     void HeapSort<T>::sort(amt::ImplicitSequence<T>& is, std::function<bool(const T&, const T&)> compare)
