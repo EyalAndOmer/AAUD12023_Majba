@@ -3,6 +3,7 @@
 // Pomocna metoda pre nacitanie uzemnych jednotiek z CSV suboru
 void SearchData::loadCSV(const std::string& path, std::function<void(ds::adt::ImplicitList<std::string> content)> insert_function) {
 	std::ifstream file(path);
+
 	if (file.is_open()) {
 		std::string line, element;
 		bool first_row = true;
@@ -28,8 +29,7 @@ void SearchData::loadCSV(const std::string& path, std::function<void(ds::adt::Im
 			// Pridanie typu uzemnej jednotky
 			insert_function(values);
 		}
-	}
-	else {
+	} else {
 		throw std::runtime_error("File not found");
 	}
 	file.close();
@@ -43,7 +43,6 @@ void SearchData::fill()
 	ds::adt::ImplicitList<std::string> root_data{ "SK", "Slovenska Republika", "Slovensko", "Slovensko", "", "republika" };
 	root.data_ = new CSVElement(root_data);
 
-
 	// Pomocna lambda funkcia, ktora sluzi na upravenie udajov a nasledne zavedenie vyvoreneho objektu CSVElement do udajovych struktur
 	std::function<void(ds::adt::ImplicitList<std::string>)> insert_kraj = [&](ds::adt::ImplicitList<std::string> content) {
 		// Nastavenie typu UC
@@ -54,7 +53,8 @@ void SearchData::fill()
 		auto element = new CSVElement(content);
 
 		// Pridanie do stromu a tabulky
-		auto* inserted_hierarchy_block = hierarchy->emplaceSon(*hierarchy->accessRoot(), hierarchy->degree(*hierarchy->accessRoot())).data_ = element;
+		auto* inserted_hierarchy_block = hierarchy->emplaceSon(*hierarchy->accessRoot(), 
+			hierarchy->degree(*hierarchy->accessRoot())).data_ = element;
 		this->kraje_table.insertWithDuplicities(inserted_hierarchy_block->get_official_title(), inserted_hierarchy_block);
 	};
 
@@ -158,6 +158,7 @@ void SearchData::fill()
 	{
 		ds::adt::ImplicitList<int> okres_vzdelavanie {0, 0, 0, 0, 0, 0, 0, 0};
 		bool change = false;
+
 		for (auto it = okres->sons_->begin(); it != okres->sons_->end(); ++it)
 		{
 			if ((*it)->data_->get_has_education())
@@ -173,6 +174,7 @@ void SearchData::fill()
 				okres_vzdelavanie[7] += (*it)->data_->get_not_clarified();
 			}
 		}
+
 		// Udaje o vzdelani nastav iba ak aspon jeden vrchol syna obsahuje udaje o vzdelavani
 		if (change)
 		{
@@ -186,6 +188,7 @@ void SearchData::fill()
 	{
 		ds::adt::ImplicitList<int> kraj_vzdelavanie{ 0, 0, 0, 0, 0, 0, 0, 0 };
 		bool change = false;
+
 		for (auto it_okres = (*it)->sons_->begin(); it_okres != (*it)->sons_->end(); ++it_okres)
 		{
 			if ((*it_okres)->data_->get_has_education())
@@ -201,6 +204,7 @@ void SearchData::fill()
 				kraj_vzdelavanie[7] += (*it_okres)->data_->get_not_clarified();
 			}
 		}
+
 		if (change)
 		{
 			(*it)->data_->set_education(&kraj_vzdelavanie);
@@ -247,17 +251,9 @@ SearchData::~SearchData()
 		delete element.data_;
 	}
 
-
-
-
-
 	hierarchy = nullptr;
 	hierarchy_current_block = nullptr;
 }
-
-// nutne pre fungovanie tolower pre specialne znaky ako je ž, š, č... Bez tohoto je kod funkcny, ale std::tolower nepremeni
-// specialne znaky Ž, Č... na ž, č...
-std::locale const utf8("en_US.UTF-8");
 
 
 // Nasledujuci kod bol zobrany z nasledujuceho zdroja

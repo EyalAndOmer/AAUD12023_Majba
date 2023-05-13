@@ -12,6 +12,7 @@
   <ItemGroup>
     <ClCompile Include="main_form.cpp" />
     <ClCompile Include="SearchData.cpp" />
+    <ClCompile Include="filtrovanie_window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="documents\uroven 1\data\obce.csv" />
@@ -29,6 +30,9 @@
       <Filter>gui</Filter>
     </ClInclude>
     <ClInclude Include="SearchData.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="filtrovanie_window.h">
       <Filter>gui</Filter>
     </ClInclude>
   </ItemGroup>

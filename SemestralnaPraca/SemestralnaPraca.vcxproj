@@ -126,6 +126,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="filtrovanie_window.cpp" />
     <ClCompile Include="SearchData.cpp" />
     <ClCompile Include="main_form.cpp" />
   </ItemGroup>
@@ -136,6 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSVElement.h" />
+    <ClInclude Include="filtrovanie_window.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="SearchData.h" />
     <ClInclude Include="main_form.h">
       <FileType>CppForm</FileType>
@@ -143,6 +147,9 @@
     <ClInclude Include="Searcher.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="filtrovanie_window.resx">
+      <DependentUpon>filtrovanie_window.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="main_form.resx">
       <DependentUpon>main_form.h</DependentUpon>
     </EmbeddedResource>

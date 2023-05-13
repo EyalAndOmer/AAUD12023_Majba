@@ -16,14 +16,15 @@ public:
 	};
 
 	// Genericka metoda na porovnanie dvoch stringov pomocou lambda funkcie. Metoda vie porovnavat attributy objektoveho typu
-	void search(const std::string& substring, std::function<bool(const std::string&, const std::string&)> compare_function, Attribute attribute, Iterator& begin, Iterator& end)
+	template<typename FilterAttribute>
+	void search(const FilterAttribute& filter_attribute, std::function<bool(const std::string&, const FilterAttribute&)> compare_function, Attribute attribute, Iterator& begin, Iterator& end)
 	{
 
 		for (auto iter = begin; iter != end; ++iter)
 		{
-			// Cierna magia, zevraj dokazeme genericky zavolat hocijaku metodu *Facepalm*
+
 			// Dereferencia attribute je tam preto, lebo posielam attribute ako adresu metody
-			if (compare_function(((*iter)->*attribute)(), substring))
+			if (compare_function(((*iter)->*attribute)(), filter_attribute))
 			{
 				output.insertLast((*iter));
 			}

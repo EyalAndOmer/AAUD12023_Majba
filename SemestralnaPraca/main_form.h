@@ -3,6 +3,7 @@
 #include <libds/amt/implicit_sequence.h>
 #include <msclr/marshal_cppstd.h>
 #include "SearchData.h";
+#include "filtrovanie_window.h"
 
 namespace Gui {
 
@@ -93,6 +94,13 @@ namespace Gui {
 	private: System::Windows::Forms::ColumnHeader^ colUniversityEducation;
 	private: System::Windows::Forms::ColumnHeader^ colNoEducation;
 	private: System::Windows::Forms::CheckBox^ checkSelectAllUC;
+	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Label^ label5;
+	private: System::Windows::Forms::ListView^ listView1;
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::ComboBox^ comboBox1;
 
 
 
@@ -158,9 +166,17 @@ namespace Gui {
 			this->cbUCType2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->listView1 = (gcnew System::Windows::Forms::ListView());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->mainTabs->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
+			this->tabPage3->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// lSearchAlgorithm
@@ -476,12 +492,82 @@ namespace Gui {
 			// 
 			// tabPage3
 			// 
+			this->tabPage3->Controls->Add(this->label6);
+			this->tabPage3->Controls->Add(this->comboBox1);
+			this->tabPage3->Controls->Add(this->button3);
+			this->tabPage3->Controls->Add(this->button2);
+			this->tabPage3->Controls->Add(this->button1);
+			this->tabPage3->Controls->Add(this->label5);
+			this->tabPage3->Controls->Add(this->listView1);
 			this->tabPage3->Location = System::Drawing::Point(4, 22);
 			this->tabPage3->Name = L"tabPage3";
 			this->tabPage3->Size = System::Drawing::Size(754, 141);
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Filtrovanie";
 			this->tabPage3->UseVisualStyleBackColor = true;
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(17, 109);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(174, 23);
+			this->button3->TabIndex = 4;
+			this->button3->Text = L"Odstranit vsetky";
+			this->button3->UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(17, 80);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(174, 23);
+			this->button2->TabIndex = 3;
+			this->button2->Text = L"Odstranit filter";
+			this->button2->UseVisualStyleBackColor = true;
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(17, 51);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(174, 23);
+			this->button1->TabIndex = 2;
+			this->button1->Text = L"Pridat filter";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &main_form::button1_Click);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(208, 4);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(65, 13);
+			this->label5->TabIndex = 1;
+			this->label5->Text = L"Pridane filtre";
+			// 
+			// listView1
+			// 
+			this->listView1->HideSelection = false;
+			this->listView1->Location = System::Drawing::Point(208, 20);
+			this->listView1->Name = L"listView1";
+			this->listView1->Size = System::Drawing::Size(543, 116);
+			this->listView1->TabIndex = 0;
+			this->listView1->UseCompatibleStateImageBehavior = false;
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Location = System::Drawing::Point(17, 24);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(174, 21);
+			this->comboBox1->TabIndex = 5;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(14, 8);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(50, 13);
+			this->label6->TabIndex = 6;
+			this->label6->Text = L"Filter nad";
 			// 
 			// main_form
 			// 
@@ -502,11 +588,134 @@ namespace Gui {
 			this->tabPage1->PerformLayout();
 			this->tabPage2->ResumeLayout(false);
 			this->tabPage2->PerformLayout();
+			this->tabPage3->ResumeLayout(false);
+			this->tabPage3->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+
+		//***********************************
+		//Metody na vypis udajov do list view
+		//***********************************
+
+		void writeDataToTable(ds::adt::ImplicitList<CSVElement*>* outputElements)
+		{
+			lvSearchOutput->Items->Clear();
+			for (auto item : *outputElements)
+			{
+				writeDataToTable(*item);
+			}
+		}
+
+		void writeDataToTable(CSVElement& element)
+		{
+			ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(element.get_official_title().c_str()));
+			listViewItem->SubItems->Add(gcnew String(element.get_medium_title().c_str()));
+			listViewItem->SubItems->Add(gcnew String(element.get_short_title().c_str()));
+			listViewItem->SubItems->Add(gcnew String(element.get_code().c_str()));
+			listViewItem->SubItems->Add(gcnew String(element.get_note().c_str()));
+			if (element.get_has_education())
+			{
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_no_education_young()).c_str()));
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_basic_education()).c_str()));
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_high_lower_education()).c_str()));
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_high_higher_education()).c_str()));
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_higher_education()).c_str()));
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_university_education()).c_str()));
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_no_education_old()).c_str()));
+				listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_not_clarified()).c_str()));
+			}
+			lvSearchOutput->Items->Add(listViewItem);
+		}
+
+		//*************************************
+		//Metody na vypis udajov do combo boxov
+		//*************************************
+
+		void writeDataToComboBox(ComboBox^ comboBox, ds::adt::ImplicitList<std::string>& elements)
+		{
+			for (auto item : elements)
+			{
+				comboBox->Items->Add(gcnew String(item.c_str()));
+			}
+		}
+
+
+		// Metoda je nutna, pretoze hierarchia nevracia adt, ale amt sekvenciu
+		void writeDataToComboBox(ComboBox^ comboBox, ds::amt::ImplicitSequence<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>& elements)
+		{
+			for (auto item : elements)
+			{
+				comboBox->Items->Add(gcnew String(item->data_->get_official_title().c_str()));
+			}
+		}
+
+
+		//*********************
+		//Metody pre zmenu tabu
+		//*********************
+
+		private: System::Void mainTabs_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			// 
+			switch (mainTabs->SelectedIndex)
+			{
+			case 0:
+				cbUCType->Items->Clear();
+				if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
+				{
+					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
+				}
+				else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
+				{
+					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
+				}
+				else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
+				{
+					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
+				}
+				else
+				{
+					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{""});
+				}
+
+				cbSonsList->Enabled = false;
+				btLowerLevel->Enabled = false;
+				btUpperLevel->Enabled = false;
+				break;
+			case 1:
+				cbUCType2->Items->Clear();
+				if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
+				{
+					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
+				}
+				else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
+				{
+					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"okres", "obec"});
+				}
+				else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
+				{
+					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"obec"});
+				}
+				else
+				{
+					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{""});
+				}
+
+				cbSonsList->Enabled = true;
+				btLowerLevel->Enabled = true;
+				btUpperLevel->Enabled = true;
+				break;
+			case 2:
+				cbSonsList->Enabled = false;
+				btLowerLevel->Enabled = false;
+				btUpperLevel->Enabled = false;
+				break;
+			}
+		}
+
+
 
 
 private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -587,7 +796,7 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 		}
 
 		// Zavolanie samotnej search metody
-		myData->searcher.search(selectedUC, myData->has_type, &CSVElement::get_UC_type,
+		myData->searcher.search<std::string>(selectedUC, myData->has_type, &CSVElement::get_UC_type,
 			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, myData->hierarchy_current_block),
 			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, nullptr));
 
@@ -595,7 +804,7 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 		{
 			Searcher<ds::adt::ImplicitList<CSVElement*>::IteratorType, std::string(CSVElement::*)()> output_searcher;
 
-			output_searcher.search(substring, selectedAlgorithmLambda, selectedFieldMethod,
+			output_searcher.search<std::string>(substring, selectedAlgorithmLambda, selectedFieldMethod,
 				myData->searcher.getOutput().begin(), myData->searcher.getOutput().end());
 
 			this->writeDataToTable(&output_searcher.getOutput());
@@ -605,60 +814,7 @@ private: System::Void buttonSearch_Click(System::Object^ sender, System::EventAr
 		}
 	}
 }
-void writeDataToTable(ds::adt::ImplicitList<CSVElement*>* outputElements)
-{
-	lvSearchOutput->Items->Clear();
-	for (auto item : *outputElements)
-	{
-		writeDataToTable(*item);
-	}
-}
 
-void writeDataToTable(CSVElement& element)
-{
-	ListViewItem^ listViewItem = gcnew ListViewItem(gcnew String(element.get_official_title().c_str()));
-	listViewItem->SubItems->Add(gcnew String(element.get_medium_title().c_str()));
-	listViewItem->SubItems->Add(gcnew String(element.get_short_title().c_str()));
-	listViewItem->SubItems->Add(gcnew String(element.get_code().c_str()));
-	listViewItem->SubItems->Add(gcnew String(element.get_note().c_str()));
-	if (element.get_has_education())
-	{
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_no_education_young()).c_str()));
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_basic_education()).c_str()));
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_high_lower_education()).c_str()));
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_high_higher_education()).c_str()));
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_higher_education()).c_str()));
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_university_education()).c_str()));
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_no_education_old()).c_str()));
-		listViewItem->SubItems->Add(gcnew String(std::to_string(element.get_not_clarified()).c_str()));
-	}
-	lvSearchOutput->Items->Add(listViewItem);
-}
-
-void writeDataToTable(ds::amt::ImplicitSequence<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>* outputElements)
-{
-	lvSearchOutput->Items->Clear();
-	for (auto item : *outputElements)
-	{
-		writeDataToTable(*item->data_);
-	}
-}
-
-void writeDataToComboBox(ComboBox^ comboBox, ds::adt::ImplicitList<std::string>& elements)
-{
-	for (auto item : elements)
-	{
-		comboBox->Items->Add(gcnew String(item.c_str()));
-	}
-}
-
-void writeDataToComboBox(ComboBox^ comboBox, ds::amt::ImplicitSequence<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>& elements)
-{
-	for (auto item : elements)
-	{
-		comboBox->Items->Add(gcnew String(item->data_->get_official_title().c_str()));
-	}
-}
 private: System::Void btUpperLevel_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (myData->hierarchy->isRoot(*myData->hierarchy_current_block))
 	{
@@ -759,60 +915,6 @@ private: System::Void btUCType_Click(System::Object^ sender, System::EventArgs^ 
 	}
 
 }
-private: System::Void mainTabs_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-	switch(mainTabs->SelectedIndex)
-	{
-	case 0:
-		cbUCType->Items->Clear();
-		if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
-		{
-			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
-		} else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
-		{
-			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
-		}
-		else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
-		{
-			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
-		}
-		else
-		{
-			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{""});
-		}
-
-		cbSonsList->Enabled = false;
-		btLowerLevel->Enabled = false;
-		btUpperLevel->Enabled = false;
-		break;
-	case 1:
-		cbUCType2->Items->Clear();
-		if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
-		{
-			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
-		} else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
-		{
-			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"okres", "obec"});
-		}
-		else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
-		{
-			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"obec"});
-		}
-		else
-		{
-			writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{""});
-		}
-
-		cbSonsList->Enabled = true;
-		btLowerLevel->Enabled = true;
-		btUpperLevel->Enabled = true;
-		break;
-	case 2:
-		cbSonsList->Enabled = false;
-		btLowerLevel->Enabled = false;
-		btUpperLevel->Enabled = false;
-		break;
-	}
-}
 private: System::Void checkSelectAllUC_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	if (checkSelectAllUC->Checked)
 	{
@@ -825,6 +927,10 @@ private: System::Void checkSelectAllUC_CheckedChanged(System::Object^ sender, Sy
 		cbSearchAlgorithm->Enabled = true;
 		tbSearch->Enabled = true;
 	}
+}
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	filtrovanie_window^ filtrovanieWindow = gcnew filtrovanie_window();
+	filtrovanieWindow->ShowDialog();
 }
 };
 }
