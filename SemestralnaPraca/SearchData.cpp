@@ -40,7 +40,7 @@ void SearchData::fill()
 {
 	// Zadefinovanie korena
 	auto& root = hierarchy->emplaceRoot();
-	ds::adt::ImplicitList<std::string> root_data{ "SK", "Slovenska Republika", "Slovensko", "Slovensko", "", "republika" };
+	ds::adt::ImplicitList<std::string> root_data{ "SK", "Slovenská Republika", "Slovensko", "Slovensko", "", "republika" };
 	root.data_ = new CSVElement(root_data);
 
 	// Pomocna lambda funkcia, ktora sluzi na upravenie udajov a nasledne zavedenie vyvoreneho objektu CSVElement do udajovych struktur
@@ -58,7 +58,7 @@ void SearchData::fill()
 		this->kraje_table.insertWithDuplicities(inserted_hierarchy_block->get_official_title(), inserted_hierarchy_block);
 	};
 
-	loadCSV("documents\\uroven_1\\data\\krajeUTF8.csv", insert_kraj);
+	loadCSV("documents\\kraje.csv", insert_kraj);
 
 	// Nacitanie okresov
 	int kraj_order = 0; // premenna na uchovanie indexu aktualne spracovaneho kraja
@@ -90,7 +90,7 @@ void SearchData::fill()
 		all_okresy.insertLast(hierarchy->accessSon(*current_son, hierarchy->degree(*current_son) - 1));
 	};
 
-	loadCSV("documents\\uroven_1\\data\\okresyUTF8.csv", insert_okres);
+	loadCSV("documents\\okresy.csv", insert_okres);
 
 	// Nacitanie obci
 	int current_okres = 0;
@@ -112,7 +112,7 @@ void SearchData::fill()
 		this->obce_table.insertWithDuplicities(inserted_hierarchy_block->get_official_title(), inserted_hierarchy_block);
 	};
 
-	loadCSV("documents\\uroven_1\\data\\obceUTF8.csv", insert_obec);
+	loadCSV("documents\\obce.csv", insert_obec);
 
 	// Nacitanie udajov o vzdelani pre jednotlive obce
 	std::function<void(ds::adt::ImplicitList<std::string>)> insert_vzdelanie = [&](ds::adt::ImplicitList<std::string> content)
@@ -129,7 +129,7 @@ void SearchData::fill()
 		table_data->insertLast(std::stoi(content[8]));
 		vzdelanie_table.insert(content.access(0), table_data);
 	};
-	loadCSV("documents\\uroven_1\\data\\vzdelanieUTF8.csv", insert_vzdelanie);
+	loadCSV("documents\\vzdelanie.csv", insert_vzdelanie);
 
 	for (auto obec : obce_table)
 	{
@@ -217,12 +217,11 @@ SearchData::SearchData()
 {
 	hierarchy = new ds::amt::MultiWayExplicitHierarchy<CSVElement*>();
 	fill();
-	hierarchy_current_block = static_cast<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>(hierarchy->accessRoot());
+	hierarchy_current_block = hierarchy->accessRoot();
 }
 
 SearchData::~SearchData()
 {
-	searcher.getOutput().clear();
 
 	for (auto element : *hierarchy)
 	{
@@ -271,12 +270,48 @@ std::string SearchData::to_string(std::wstring const& s) {
 	return conv.to_bytes(s);
 }
 
-// Converts a UTF-8 encoded string to upper case
+// Converts a UTF-8 encoded string to lower case
 std::string SearchData::to_lower(std::string const& s) {
 	auto ss = to_wstring(s);
 	for (auto& c : ss) {
 		c = std::tolower(c, utf8);
 	}
 	return to_string(ss);
+}
+
+int SearchData::getVowelCount(std::string& str)
+{
+	const std::string vowels = u8"aeiouyáéíóúýä";
+	int count = 0;
+	int i = 0;
+
+	while (i < str.length())
+	{
+		std::string utf8Char;
+
+		if (str[i] >= -64 && str[i] <= -33)
+		{
+			utf8Char = str.substr(i, 2);
+			i += 2;
+		}
+		else if (str[i] >= -32 && str[i] <= -17)
+		{
+			utf8Char = str.substr(i, 3);
+			i += 3;
+		}
+		else
+		{
+			utf8Char += str[i];
+			i++;
+		}
+
+		utf8Char = to_lower(utf8Char);
+
+		if (vowels.find(utf8Char) != std::string::npos)
+		{
+			count++;
+		}
+	}
+	return count;
 }
 

@@ -1,6 +1,9 @@
 #include <string>
 #include <libds/adt/list.h>
 
+#ifndef CSVELEMENT_H
+#define CSVELEMENT_H
+
 class CSVElement {
 private:
 	std::string code;
@@ -115,3 +118,4 @@ public:
 	}
 
 };
+#endif

@@ -1,9 +1,11 @@
 ﻿#pragma once
-// Docasne riesenie
 #include <libds/amt/implicit_sequence.h>
 #include <msclr/marshal_cppstd.h>
 #include "SearchData.h";
 #include "filtrovanie_window.h"
+#include "Filter.h"
+#include <libds/adt/list.h>
+#include <libds/adt/sorts.h>
 
 namespace Gui {
 
@@ -20,12 +22,32 @@ namespace Gui {
 	public ref class main_form : public System::Windows::Forms::Form
 	{
 	private:
-		SearchData* myData;
+		SearchData* myData; // objekt so zadefinovanymi lambda funkciami a pomocnymi atributmi
+		filtrovanie_window^ filtrovanieWindow; // instancia druheho formularu
+		ds::adt::ImplicitList<CSVElement*>* outputList; // list ulozenych hodnot
+		ds::adt::ImplicitList<Filter*>* selectedFilters; // list ulozenych filtrov
+
+	private: System::Windows::Forms::ListBox^ lbSelectedFilters;
+
+	private: System::Windows::Forms::Button^ btnClearListView;
+	private: System::Windows::Forms::ComboBox^ cbSortAlgorithm;
+
+
+
+
+	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Button^ btnSortListView;
+	private: System::Windows::Forms::Button^ btnFilter;
 	public:
 		main_form(void)
 		{
 			InitializeComponent();
+
 			this->myData = new SearchData();
+			selectedFilters = new ds::adt::ImplicitList<Filter*>();
+			filtrovanieWindow = gcnew filtrovanie_window();
+			outputList = new ds::adt::ImplicitList<CSVElement*>();
+
 			writeDataToComboBox(cbSonsList, *myData->hierarchy_current_block->sons_);
 			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
 
@@ -33,6 +55,10 @@ namespace Gui {
 			cbSonsList->Enabled = false;
 			btLowerLevel->Enabled = false;
 			btUpperLevel->Enabled = false;
+
+			// Pri starte taktiez nepovolit zoradovanie, kedze tabulka bude mat vzdy UC s rovnakym nazvom
+			cbSortAlgorithm->Enabled = false;
+			btnSortListView->Enabled = false;
 		}
 
 	protected:
@@ -43,10 +69,31 @@ namespace Gui {
 		~main_form()
 		{
 			delete myData;
+
+			delete outputList;
+
+			for (auto element : *selectedFilters)
+			{
+				delete element;
+			}
+
+			delete selectedFilters;
+
+			delete filtrovanieWindow;
+
+			for (int i = 0; i < lbSelectedFilters->Items->Count; i++)
+			{
+				delete lbSelectedFilters->Items[i];
+			}
+			lbSelectedFilters->Items->Clear();
+
+			delete lbSelectedFilters;
+
 			if (components)
 			{
 				delete components;
 			}
+
 		}
 
 	protected:
@@ -94,27 +141,13 @@ namespace Gui {
 	private: System::Windows::Forms::ColumnHeader^ colUniversityEducation;
 	private: System::Windows::Forms::ColumnHeader^ colNoEducation;
 	private: System::Windows::Forms::CheckBox^ checkSelectAllUC;
-	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button1;
+private: System::Windows::Forms::Button^ btnRemoveAllFilters;
+
+private: System::Windows::Forms::Button^ btnRemoveFilter;
+
+private: System::Windows::Forms::Button^ btnAddFilter;
+
 	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::ListView^ listView1;
-	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::ComboBox^ comboBox1;
-
-
-
-
-
-
-
-
-
-
-
-
-	protected:
-
 
 	private:
 		/// <summary>
@@ -166,13 +199,16 @@ namespace Gui {
 			this->cbUCType2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->btnFilter = (gcnew System::Windows::Forms::Button());
+			this->lbSelectedFilters = (gcnew System::Windows::Forms::ListBox());
+			this->btnRemoveAllFilters = (gcnew System::Windows::Forms::Button());
+			this->btnRemoveFilter = (gcnew System::Windows::Forms::Button());
+			this->btnAddFilter = (gcnew System::Windows::Forms::Button());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->listView1 = (gcnew System::Windows::Forms::ListView());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->btnClearListView = (gcnew System::Windows::Forms::Button());
+			this->cbSortAlgorithm = (gcnew System::Windows::Forms::ComboBox());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->btnSortListView = (gcnew System::Windows::Forms::Button());
 			this->mainTabs->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
@@ -185,7 +221,7 @@ namespace Gui {
 			this->lSearchAlgorithm->Name = L"lSearchAlgorithm";
 			this->lSearchAlgorithm->Size = System::Drawing::Size(179, 13);
 			this->lSearchAlgorithm->TabIndex = 0;
-			this->lSearchAlgorithm->Text = L"Vyberte vyhladaci algoritmus";
+			this->lSearchAlgorithm->Text = L"Vyberte vyhladávací algoritmus";
 			// 
 			// cbSearchAlgorithm
 			// 
@@ -202,9 +238,9 @@ namespace Gui {
 			this->lSearchBox->AutoSize = true;
 			this->lSearchBox->Location = System::Drawing::Point(524, 8);
 			this->lSearchBox->Name = L"lSearchBox";
-			this->lSearchBox->Size = System::Drawing::Size(157, 13);
+			this->lSearchBox->Size = System::Drawing::Size(168, 13);
 			this->lSearchBox->TabIndex = 3;
-			this->lSearchBox->Text = L"Zadajte string pre porovnavanie";
+			this->lSearchBox->Text = L"Zadajte reťazec pre porovnavanie";
 			// 
 			// tbSearch
 			// 
@@ -236,9 +272,9 @@ namespace Gui {
 			});
 			this->lvSearchOutput->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
 			this->lvSearchOutput->HideSelection = false;
-			this->lvSearchOutput->Location = System::Drawing::Point(16, 215);
+			this->lvSearchOutput->Location = System::Drawing::Point(21, 232);
 			this->lvSearchOutput->Name = L"lvSearchOutput";
-			this->lvSearchOutput->Size = System::Drawing::Size(1015, 215);
+			this->lvSearchOutput->Size = System::Drawing::Size(1015, 198);
 			this->lvSearchOutput->TabIndex = 6;
 			this->lvSearchOutput->UseCompatibleStateImageBehavior = false;
 			this->lvSearchOutput->View = System::Windows::Forms::View::Details;
@@ -300,9 +336,9 @@ namespace Gui {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(296, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(184, 13);
+			this->label1->Size = System::Drawing::Size(186, 13);
 			this->label1->TabIndex = 7;
-			this->label1->Text = L"Vyberte stlpec nad ktorym vyhladavat";
+			this->label1->Text = L"Vyberte stĺpec nad ktorým vyhladávať";
 			// 
 			// cbSelectField
 			// 
@@ -328,9 +364,9 @@ namespace Gui {
 				static_cast<System::Byte>(0)));
 			this->label2->Location = System::Drawing::Point(12, 23);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(146, 24);
+			this->label2->Size = System::Drawing::Size(137, 24);
 			this->label2->TabIndex = 9;
-			this->label2->Text = L"Aktualna uroven";
+			this->label2->Text = L"Aktuálny vrchol";
 			// 
 			// lbCurrentLevel
 			// 
@@ -339,7 +375,7 @@ namespace Gui {
 			this->lbCurrentLevel->Name = L"lbCurrentLevel";
 			this->lbCurrentLevel->Size = System::Drawing::Size(108, 13);
 			this->lbCurrentLevel->TabIndex = 10;
-			this->lbCurrentLevel->Text = L"Slovenska Republika";
+			this->lbCurrentLevel->Text = L"Slovenská Republika";
 			// 
 			// btUpperLevel
 			// 
@@ -347,7 +383,7 @@ namespace Gui {
 			this->btUpperLevel->Name = L"btUpperLevel";
 			this->btUpperLevel->Size = System::Drawing::Size(118, 23);
 			this->btUpperLevel->TabIndex = 11;
-			this->btUpperLevel->Text = L"uroven vyssie";
+			this->btUpperLevel->Text = L"Úroveň vyššie";
 			this->btUpperLevel->UseVisualStyleBackColor = true;
 			this->btUpperLevel->Click += gcnew System::EventHandler(this, &main_form::btUpperLevel_Click);
 			// 
@@ -366,7 +402,7 @@ namespace Gui {
 			this->btLowerLevel->Name = L"btLowerLevel";
 			this->btLowerLevel->Size = System::Drawing::Size(118, 23);
 			this->btLowerLevel->TabIndex = 13;
-			this->btLowerLevel->Text = L"Uroven nizsie";
+			this->btLowerLevel->Text = L"Úroveň nižšie";
 			this->btLowerLevel->UseVisualStyleBackColor = true;
 			this->btLowerLevel->Click += gcnew System::EventHandler(this, &main_form::btLowerLevel_Click);
 			// 
@@ -377,7 +413,7 @@ namespace Gui {
 			this->lbUCType->Name = L"lbUCType";
 			this->lbUCType->Size = System::Drawing::Size(145, 13);
 			this->lbUCType->TabIndex = 15;
-			this->lbUCType->Text = L"Vyberte typ uzemnej jednotky";
+			this->lbUCType->Text = L"Vyberte typ územnej jednotky";
 			// 
 			// cbUCType
 			// 
@@ -394,7 +430,7 @@ namespace Gui {
 			this->btUCType->Name = L"btUCType";
 			this->btUCType->Size = System::Drawing::Size(170, 30);
 			this->btUCType->TabIndex = 17;
-			this->btUCType->Text = L"Zobrazit";
+			this->btUCType->Text = L"Zobraziť";
 			this->btUCType->UseVisualStyleBackColor = true;
 			this->btUCType->Click += gcnew System::EventHandler(this, &main_form::btUCType_Click);
 			// 
@@ -422,7 +458,7 @@ namespace Gui {
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
 			this->tabPage1->Size = System::Drawing::Size(754, 141);
 			this->tabPage1->TabIndex = 0;
-			this->tabPage1->Text = L"Konkretne vyhladavanie";
+			this->tabPage1->Text = L"Bodové vyhladávanie";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
 			// label4
@@ -432,7 +468,7 @@ namespace Gui {
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(160, 13);
 			this->label4->TabIndex = 19;
-			this->label4->Text = L"Zadajte nazov uzemnej jednotky";
+			this->label4->Text = L"Zadajte názov územnej jednotky";
 			// 
 			// tbUCName
 			// 
@@ -458,7 +494,7 @@ namespace Gui {
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
 			this->tabPage2->Size = System::Drawing::Size(754, 141);
 			this->tabPage2->TabIndex = 1;
-			this->tabPage2->Text = L"Bodove vyhladavanie";
+			this->tabPage2->Text = L"Hĺbkové vyhládávanie";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			// 
 			// checkSelectAllUC
@@ -466,9 +502,9 @@ namespace Gui {
 			this->checkSelectAllUC->AutoSize = true;
 			this->checkSelectAllUC->Location = System::Drawing::Point(21, 51);
 			this->checkSelectAllUC->Name = L"checkSelectAllUC";
-			this->checkSelectAllUC->Size = System::Drawing::Size(90, 17);
+			this->checkSelectAllUC->Size = System::Drawing::Size(91, 17);
 			this->checkSelectAllUC->TabIndex = 18;
-			this->checkSelectAllUC->Text = L"Vybrat vsetky";
+			this->checkSelectAllUC->Text = L"Vybrať všetky";
 			this->checkSelectAllUC->UseVisualStyleBackColor = true;
 			this->checkSelectAllUC->CheckedChanged += gcnew System::EventHandler(this, &main_form::checkSelectAllUC_CheckedChanged);
 			// 
@@ -488,17 +524,16 @@ namespace Gui {
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(145, 13);
 			this->label3->TabIndex = 17;
-			this->label3->Text = L"Vyberte typ uzemnej jednotky";
+			this->label3->Text = L"Vyberte typ územnej jednotky";
 			// 
 			// tabPage3
 			// 
-			this->tabPage3->Controls->Add(this->label6);
-			this->tabPage3->Controls->Add(this->comboBox1);
-			this->tabPage3->Controls->Add(this->button3);
-			this->tabPage3->Controls->Add(this->button2);
-			this->tabPage3->Controls->Add(this->button1);
+			this->tabPage3->Controls->Add(this->btnFilter);
+			this->tabPage3->Controls->Add(this->lbSelectedFilters);
+			this->tabPage3->Controls->Add(this->btnRemoveAllFilters);
+			this->tabPage3->Controls->Add(this->btnRemoveFilter);
+			this->tabPage3->Controls->Add(this->btnAddFilter);
 			this->tabPage3->Controls->Add(this->label5);
-			this->tabPage3->Controls->Add(this->listView1);
 			this->tabPage3->Location = System::Drawing::Point(4, 22);
 			this->tabPage3->Name = L"tabPage3";
 			this->tabPage3->Size = System::Drawing::Size(754, 141);
@@ -506,33 +541,53 @@ namespace Gui {
 			this->tabPage3->Text = L"Filtrovanie";
 			this->tabPage3->UseVisualStyleBackColor = true;
 			// 
-			// button3
+			// btnFilter
 			// 
-			this->button3->Location = System::Drawing::Point(17, 109);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(174, 23);
-			this->button3->TabIndex = 4;
-			this->button3->Text = L"Odstranit vsetky";
-			this->button3->UseVisualStyleBackColor = true;
+			this->btnFilter->Location = System::Drawing::Point(589, 99);
+			this->btnFilter->Name = L"btnFilter";
+			this->btnFilter->Size = System::Drawing::Size(146, 33);
+			this->btnFilter->TabIndex = 8;
+			this->btnFilter->Text = L"Filtrovať";
+			this->btnFilter->UseVisualStyleBackColor = true;
+			this->btnFilter->Click += gcnew System::EventHandler(this, &main_form::btnFilter_Click);
 			// 
-			// button2
+			// lbSelectedFilters
 			// 
-			this->button2->Location = System::Drawing::Point(17, 80);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(174, 23);
-			this->button2->TabIndex = 3;
-			this->button2->Text = L"Odstranit filter";
-			this->button2->UseVisualStyleBackColor = true;
+			this->lbSelectedFilters->FormattingEnabled = true;
+			this->lbSelectedFilters->Location = System::Drawing::Point(211, 24);
+			this->lbSelectedFilters->Name = L"lbSelectedFilters";
+			this->lbSelectedFilters->Size = System::Drawing::Size(524, 69);
+			this->lbSelectedFilters->TabIndex = 7;
 			// 
-			// button1
+			// btnRemoveAllFilters
 			// 
-			this->button1->Location = System::Drawing::Point(17, 51);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(174, 23);
-			this->button1->TabIndex = 2;
-			this->button1->Text = L"Pridat filter";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &main_form::button1_Click);
+			this->btnRemoveAllFilters->Location = System::Drawing::Point(12, 80);
+			this->btnRemoveAllFilters->Name = L"btnRemoveAllFilters";
+			this->btnRemoveAllFilters->Size = System::Drawing::Size(174, 23);
+			this->btnRemoveAllFilters->TabIndex = 4;
+			this->btnRemoveAllFilters->Text = L"Odstránit vsetky";
+			this->btnRemoveAllFilters->UseVisualStyleBackColor = true;
+			this->btnRemoveAllFilters->Click += gcnew System::EventHandler(this, &main_form::btnRemoveAllFilters_Click);
+			// 
+			// btnRemoveFilter
+			// 
+			this->btnRemoveFilter->Location = System::Drawing::Point(12, 51);
+			this->btnRemoveFilter->Name = L"btnRemoveFilter";
+			this->btnRemoveFilter->Size = System::Drawing::Size(174, 23);
+			this->btnRemoveFilter->TabIndex = 3;
+			this->btnRemoveFilter->Text = L"Odstrániť filter";
+			this->btnRemoveFilter->UseVisualStyleBackColor = true;
+			this->btnRemoveFilter->Click += gcnew System::EventHandler(this, &main_form::btnRemoveFilter_Click);
+			// 
+			// btnAddFilter
+			// 
+			this->btnAddFilter->Location = System::Drawing::Point(12, 22);
+			this->btnAddFilter->Name = L"btnAddFilter";
+			this->btnAddFilter->Size = System::Drawing::Size(174, 23);
+			this->btnAddFilter->TabIndex = 2;
+			this->btnAddFilter->Text = L"Pridať filter";
+			this->btnAddFilter->UseVisualStyleBackColor = true;
+			this->btnAddFilter->Click += gcnew System::EventHandler(this, &main_form::btnAddFilter_Click);
 			// 
 			// label5
 			// 
@@ -541,39 +596,55 @@ namespace Gui {
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(65, 13);
 			this->label5->TabIndex = 1;
-			this->label5->Text = L"Pridane filtre";
+			this->label5->Text = L"Pridané filtre";
 			// 
-			// listView1
+			// btnClearListView
 			// 
-			this->listView1->HideSelection = false;
-			this->listView1->Location = System::Drawing::Point(208, 20);
-			this->listView1->Name = L"listView1";
-			this->listView1->Size = System::Drawing::Size(543, 116);
-			this->listView1->TabIndex = 0;
-			this->listView1->UseCompatibleStateImageBehavior = false;
+			this->btnClearListView->Location = System::Drawing::Point(903, 203);
+			this->btnClearListView->Name = L"btnClearListView";
+			this->btnClearListView->Size = System::Drawing::Size(129, 23);
+			this->btnClearListView->TabIndex = 19;
+			this->btnClearListView->Text = L"Vyčistiť";
+			this->btnClearListView->UseVisualStyleBackColor = true;
+			this->btnClearListView->Click += gcnew System::EventHandler(this, &main_form::btnClearListView_Click);
 			// 
-			// comboBox1
+			// cbSortAlgorithm
 			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(17, 24);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(174, 21);
-			this->comboBox1->TabIndex = 5;
+			this->cbSortAlgorithm->FormattingEnabled = true;
+			this->cbSortAlgorithm->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Názvu", L"Počtu samohlások" });
+			this->cbSortAlgorithm->Location = System::Drawing::Point(576, 203);
+			this->cbSortAlgorithm->Name = L"cbSortAlgorithm";
+			this->cbSortAlgorithm->Size = System::Drawing::Size(174, 21);
+			this->cbSortAlgorithm->TabIndex = 20;
 			// 
-			// label6
+			// label7
 			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(14, 8);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(50, 13);
-			this->label6->TabIndex = 6;
-			this->label6->Text = L"Filter nad";
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(573, 189);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(72, 13);
+			this->label7->TabIndex = 21;
+			this->label7->Text = L"Zoradiť podľa";
+			// 
+			// btnSortListView
+			// 
+			this->btnSortListView->Location = System::Drawing::Point(756, 203);
+			this->btnSortListView->Name = L"btnSortListView";
+			this->btnSortListView->Size = System::Drawing::Size(129, 23);
+			this->btnSortListView->TabIndex = 22;
+			this->btnSortListView->Text = L"Zoradiť";
+			this->btnSortListView->UseVisualStyleBackColor = true;
+			this->btnSortListView->Click += gcnew System::EventHandler(this, &main_form::btnSortListView_Click);
 			// 
 			// main_form
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1047, 436);
+			this->Controls->Add(this->btnSortListView);
+			this->Controls->Add(this->label7);
+			this->Controls->Add(this->cbSortAlgorithm);
+			this->Controls->Add(this->btnClearListView);
 			this->Controls->Add(this->mainTabs);
 			this->Controls->Add(this->btLowerLevel);
 			this->Controls->Add(this->cbSonsList);
@@ -644,11 +715,41 @@ namespace Gui {
 
 
 		// Metoda je nutna, pretoze hierarchia nevracia adt, ale amt sekvenciu
-		void writeDataToComboBox(ComboBox^ comboBox, ds::amt::ImplicitSequence<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>& elements)
+		void writeDataToComboBox(ComboBox^ comboBox, 
+			ds::amt::ImplicitSequence<ds::amt::MultiWayExplicitHierarchyBlock<CSVElement*>*>& elements)
 		{
 			for (auto item : elements)
 			{
 				comboBox->Items->Add(gcnew String(item->data_->get_official_title().c_str()));
+			}
+		}
+
+		void writeFilter(Filter* filter)
+		{
+			lbSelectedFilters->Items->Add(gcnew String(filter->toString().c_str()));
+
+			selectedFilters->insertLast(filter);
+		}
+
+		// Pomocna metoda pre vypis moznych UC na zaklade pozicie bloku hierarchie
+		void writePossibleUC(ComboBox^ comboBox)
+		{
+			comboBox->Items->Clear();
+			if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
+			{
+				writeDataToComboBox(comboBox, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
+			}
+			else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
+			{
+				writeDataToComboBox(comboBox, ds::adt::ImplicitList<std::string>{"okres", "obec"});
+			}
+			else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
+			{
+				writeDataToComboBox(comboBox, ds::adt::ImplicitList<std::string>{"obec"});
+			}
+			else
+			{
+				writeDataToComboBox(comboBox, ds::adt::ImplicitList<std::string>{""});
 			}
 		}
 
@@ -662,275 +763,371 @@ namespace Gui {
 			switch (mainTabs->SelectedIndex)
 			{
 			case 0:
-				cbUCType->Items->Clear();
-				if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
-				{
-					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
-				}
-				else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
-				{
-					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
-				}
-				else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
-				{
-					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
-				}
-				else
-				{
-					writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{""});
-				}
-
+				// Nastavenie zapnutia a vypnutia prechadzaca po hierarchii na zaklade tabu
 				cbSonsList->Enabled = false;
 				btLowerLevel->Enabled = false;
 				btUpperLevel->Enabled = false;
+
+				cbSortAlgorithm->Enabled = false;
+				btnSortListView->Enabled = false;
 				break;
 			case 1:
-				cbUCType2->Items->Clear();
-				if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
-				{
-					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
-				}
-				else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
-				{
-					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"okres", "obec"});
-				}
-				else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
-				{
-					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{"obec"});
-				}
-				else
-				{
-					writeDataToComboBox(cbUCType2, ds::adt::ImplicitList<std::string>{""});
-				}
+				writePossibleUC(cbUCType2);
 
 				cbSonsList->Enabled = true;
 				btLowerLevel->Enabled = true;
 				btUpperLevel->Enabled = true;
+
+				cbSortAlgorithm->Enabled = true;
+				btnSortListView->Enabled = true;
 				break;
 			case 2:
 				cbSonsList->Enabled = false;
 				btLowerLevel->Enabled = false;
 				btUpperLevel->Enabled = false;
+
+				cbSortAlgorithm->Enabled = true;
+				btnSortListView->Enabled = true;
 				break;
 			}
 		}
 
+		//****************
+	    //Metody pre tab 1
+	    //****************
 
-
-
-private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
-	// Definicia indexov pre comboboxy, potrebne pre kontrolu ci je nieco zvolene
-	int cbSearchAlgorithmIndex = cbSearchAlgorithm->SelectedIndex;
-	int cbFieldSelectIndex = cbSelectField->SelectedIndex;
-	int cbUCTypeIndex = cbUCType2->SelectedIndex;
-	String^ tbSearchValue = tbSearch->Text;
-	bool passed = false;
-	bool search_all = false;
-
-	if (cbFieldSelectIndex == -1 && cbSelectField->Enabled)
-	{
-		MessageBox::Show("Vyberte pole nad ktorym chcete porovnavat.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else if (String::IsNullOrEmpty(tbSearchValue) && tbSearch->Enabled)
-	{
-		MessageBox::Show("Zadajte text na porovnanie.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else if (cbSearchAlgorithmIndex == -1 && cbSearchAlgorithm->Enabled)
-	{
-		MessageBox::Show("Zvolte algoritmus pomocou ktoreho chcete vyhladavat.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else if (cbUCTypeIndex == -1)
-	{
-		MessageBox::Show("Zvolte typ uzemnej jednotky ktoru chcete vyhladavat.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else
-	{
-		passed = true;
-	}
-
-	if (cbSelectField->Enabled)
-	{
-		search_all = false;
-	} else
-	{
-		search_all = true;
-	}
-
-	if (passed)
-	{
-		lvSearchOutput->Items->Clear();
-		this->myData->searcher.clear();
-
-		std::string selectedAlgorithm;
-		std::string selectedField;
-		std::string substring;
-		std::string(CSVElement:: * selectedFieldMethod)();
-		std::function<bool(const std::string&, const std::string&)> selectedAlgorithmLambda;
-
-		std::string selectedUC = msclr::interop::marshal_as<std::string>(cbUCType2->SelectedItem->ToString());
-		if (!search_all)
-		{
-			// Ziskanie zadanych hodnot
-			selectedAlgorithm = msclr::interop::marshal_as<std::string>(cbSearchAlgorithm->SelectedItem->ToString());
-			selectedField = msclr::interop::marshal_as<std::string>(cbSelectField->SelectedItem->ToString());
-			substring = msclr::interop::marshal_as<std::string>(tbSearchValue);
-
-			selectedAlgorithmLambda = selectedAlgorithm == "Zo zaciatku" ? myData->search_from_beginning : myData->search_substring;
-
-
-			if (selectedField == "Cele meno")
+		private: System::Void btUCType_Click(System::Object^ sender, System::EventArgs^ e) {
+			std::string nameUC = msclr::interop::marshal_as<std::string>(tbUCName->Text);
+			if (cbUCType->SelectedIndex == -1)
 			{
-				selectedFieldMethod = &CSVElement::get_official_title;
+				MessageBox::Show("Vyberte územnú jednotku, ktorú chcete zobraziť", "Chyba", 
+					MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			}
-			else if (selectedField == "Skratene meno")
+			else if (nameUC == "") {
+				MessageBox::Show("Zadajte názov územnej jednotky", "Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			else
 			{
-				selectedFieldMethod = &CSVElement::get_medium_title;
-			}
-			else if (selectedField == "Kratke meno")
-			{
-				selectedFieldMethod = &CSVElement::get_short_title;
-			}
-			else if (selectedField == "Kod")
-			{
-				selectedFieldMethod = &CSVElement::get_code;
-			}
-			else {
-				selectedFieldMethod = &CSVElement::get_note;
+				std::string selectedUC = msclr::interop::marshal_as<std::string>(cbUCType->SelectedItem->ToString());
+
+				CSVElement** foundElement = nullptr;
+				ds::adt::ImplicitList<CSVElement*>* foundElements = nullptr;
+				if (selectedUC == "kraj")
+				{
+					this->myData->kraje_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
+				}
+				else if (selectedUC == "okres")
+				{
+					this->myData->okresy_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
+				}
+				else
+				{
+					this->myData->obce_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
+				}
+
+				if (foundElement == nullptr)
+				{
+					MessageBox::Show("UC so zadaným menom neexistuje", "Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				}
+				else
+				{
+					outputList->clear();
+
+					if (foundElements->isEmpty())
+					{
+						outputList->insertLast(*foundElement);
+					}
+					else
+					{
+						outputList->insertLast(*foundElement);
+
+						for (auto el: *foundElements)
+						{
+							outputList->insertLast(el);
+						}
+					}
+					this->writeDataToTable(outputList);
+				}
 			}
 		}
+		
+		//****************
+	    //Metody pre tab 2
+	    //****************
 
-		// Zavolanie samotnej search metody
-		myData->searcher.search<std::string>(selectedUC, myData->has_type, &CSVElement::get_UC_type,
-			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, myData->hierarchy_current_block),
-			ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, nullptr));
-
-		if (!search_all)
-		{
-			Searcher<ds::adt::ImplicitList<CSVElement*>::IteratorType, std::string(CSVElement::*)()> output_searcher;
-
-			output_searcher.search<std::string>(substring, selectedAlgorithmLambda, selectedFieldMethod,
-				myData->searcher.getOutput().begin(), myData->searcher.getOutput().end());
-
-			this->writeDataToTable(&output_searcher.getOutput());
-		} else
-		{
-			this->writeDataToTable(&myData->searcher.getOutput());
-		}
-	}
-}
-
-private: System::Void btUpperLevel_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (myData->hierarchy->isRoot(*myData->hierarchy_current_block))
-	{
-		MessageBox::Show("Zvoleny vrchol je korenom.\n Nemozno ist o uroven vyssie.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else
-	{
-		myData->hierarchy_current_block = myData->hierarchy->accessParent(*myData->hierarchy_current_block);
-		cbSonsList->Items->Clear();
-		cbUCType->Items->Clear();
-		writeDataToComboBox(cbSonsList, *myData->hierarchy_current_block->sons_);
-		lbCurrentLevel->Text = gcnew String(myData->hierarchy_current_block->data_->get_official_title().c_str());
-
-		// Zmena obsahu cb uzemneho celku
-		if (myData->hierarchy_current_block->data_->get_UC_type() == "republika")
-		{
-			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"kraj", "okres", "obec"});
-		}
-		else if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
-		{
-			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
-		}
-		else
-		{
-			writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
-		}
-	}
-}
-private: System::Void btLowerLevel_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (cbSonsList->SelectedIndex == -1)
-	{
-		MessageBox::Show("Zvolte prvok na ktory sa chcete posunut", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else
-	{
-		if (myData->hierarchy->degree(*myData->hierarchy->accessSon(*myData->hierarchy_current_block, cbSonsList->SelectedIndex)) == 0)
-		{
-			MessageBox::Show("Zvoleny vrchol je list.\n Nemozno ist o uroven nizsie.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		}
-		else
-		{
-			myData->hierarchy_current_block = myData->hierarchy->accessSon(*myData->hierarchy_current_block, cbSonsList->SelectedIndex);
-			cbSonsList->Items->Clear();
-			cbUCType->Items->Clear();
-			writeDataToComboBox(cbSonsList, *myData->hierarchy_current_block->sons_);
-			lbCurrentLevel->Text = gcnew String(myData->hierarchy_current_block->data_->get_official_title().c_str());
-
-			// Zmena obsahu cb uzemneho celku
-			if (myData->hierarchy_current_block->data_->get_UC_type() == "kraj")
+		// Posunutie sa o uroven vyssie
+		private: System::Void btUpperLevel_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (myData->hierarchy->isRoot(*myData->hierarchy_current_block))
 			{
-				writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"okres", "obec"});
-			} else if (myData->hierarchy_current_block->data_->get_UC_type() == "okres")
+				MessageBox::Show("Zvolený vrchol je koreň.\n Nemožno ísť o úroveň vyššie.", 
+					"Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			else
 			{
-				writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{"obec"});
+				myData->hierarchy_current_block = myData->hierarchy->accessParent(*myData->hierarchy_current_block);
+				cbSonsList->Items->Clear();
+				writeDataToComboBox(cbSonsList, *myData->hierarchy_current_block->sons_);
+				lbCurrentLevel->Text = gcnew String(myData->hierarchy_current_block->data_->get_official_title().c_str());
+
+				// Zmena obsahu cb uzemneho celku
+				writePossibleUC(cbUCType2);
+			}
+		}
+
+		// Posunutie sa o uroven nizsie
+		private: System::Void btLowerLevel_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (cbSonsList->SelectedIndex == -1)
+			{
+				MessageBox::Show("Zvolte prvok, na ktorý sa chcete posunúť", "Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			else
+			{
+				if (myData->hierarchy->isLeaf(*myData->hierarchy_current_block))
+				{
+					MessageBox::Show("Zvolený vrchol je list.\n Nemožno ísť o úroveň nižšie.", 
+						"Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				}
+				else
+				{
+					myData->hierarchy_current_block = myData->hierarchy->accessSon(*myData->hierarchy_current_block, 
+						cbSonsList->SelectedIndex);
+					cbSonsList->Items->Clear();
+					writeDataToComboBox(cbSonsList, *myData->hierarchy_current_block->sons_);
+					lbCurrentLevel->Text = gcnew String(myData->hierarchy_current_block->data_->get_official_title().c_str());
+
+					// Zmena obsahu cb uzemneho celku
+					writePossibleUC(cbUCType2);
+				}
+			}
+		}
+
+		// Vyhladanie z daneho vrchola
+		private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
+			// Definicia indexov pre comboboxy, potrebne pre kontrolu ci je nieco zvolene
+			int cbSearchAlgorithmIndex = cbSearchAlgorithm->SelectedIndex;
+			int cbFieldSelectIndex = cbSelectField->SelectedIndex;
+			int cbUCTypeIndex = cbUCType2->SelectedIndex;
+			String^ tbSearchValue = tbSearch->Text;
+			bool passed = false;
+			bool search_all = false;
+
+			if (cbFieldSelectIndex == -1 && cbSelectField->Enabled)
+			{
+				MessageBox::Show("Vyberte pole, nad ktorým chcete porovnávať.", "Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			} else if (String::IsNullOrEmpty(tbSearchValue) && tbSearch->Enabled)
+			{
+				MessageBox::Show("Zadajte text na porovnanie.", "Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			} else if (cbSearchAlgorithmIndex == -1 && cbSearchAlgorithm->Enabled)
+			{
+				MessageBox::Show("Zvolte algoritmus, pomocou ktorého chcete vyhladávať.", "Chyba", 
+					MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			} else if (cbUCTypeIndex == -1)
+			{
+				MessageBox::Show("Zvolte typ územnej jednotky, ktorú chcete vyhladať.", "Chyba", 
+					MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			} else
 			{
-				writeDataToComboBox(cbUCType, ds::adt::ImplicitList<std::string>{""});
+				passed = true;
 			}
-		}
-	}
-}
-private: System::Void btUCType_Click(System::Object^ sender, System::EventArgs^ e) {
-	std::string nameUC = msclr::interop::marshal_as<std::string>(tbUCName->Text);
-	if (cbUCType->SelectedIndex == -1)
-	{
-		MessageBox::Show("Vyberte uzemnu jednotku, ktoru chcete zobrazit", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else if (nameUC == "") {
-		MessageBox::Show("Zadajte nazov uzemnej jednotky", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	} else
-	{
-		std::string selectedUC = msclr::interop::marshal_as<std::string>(cbUCType->SelectedItem->ToString());
-		CSVElement** foundElement = nullptr;
-		ds::adt::ImplicitList<CSVElement*>* foundElements = nullptr;
-		if (selectedUC == "kraj")
-		{
-			this->myData->kraje_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
-		} else if (selectedUC == "okres")
-		{
-			this->myData->okresy_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
-		} else
-		{
-			this->myData->obce_table.tryFindWithDuplicities(nameUC, foundElement, foundElements);
-		}
 
-		if (foundElement == nullptr)
-		{
-			MessageBox::Show("UC so zadanym menom neexistuje", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		} else
-		{
-			if (foundElements->isEmpty())
+			if (cbSelectField->Enabled)
+			{
+				search_all = false;
+			} else
+			{
+				search_all = true;
+			}
+
+			if (passed)
 			{
 				lvSearchOutput->Items->Clear();
-				this->writeDataToTable(**foundElement);
-			} else
-			{
-				this->writeDataToTable(foundElements);
-				this->writeDataToTable(**foundElement);
+
+				std::string selectedAlgorithm;
+				std::string selectedField;
+				std::string substring;
+				std::string(CSVElement:: * selectedFieldMethod)();
+				std::function<bool(const std::string&, const std::string&)> selectedAlgorithmLambda;
+
+				std::string selectedUC = msclr::interop::marshal_as<std::string>(cbUCType2->SelectedItem->ToString());
+				if (!search_all)
+				{
+					// Ziskanie zadanych hodnot
+					selectedAlgorithm = msclr::interop::marshal_as<std::string>(cbSearchAlgorithm->SelectedItem->ToString());
+					selectedField = msclr::interop::marshal_as<std::string>(cbSelectField->SelectedItem->ToString());
+					substring = msclr::interop::marshal_as<std::string>(tbSearchValue);
+
+					selectedAlgorithmLambda = selectedAlgorithm == "Zo zaciatku" ? 
+						myData->search_from_beginning : myData->search_substring;
+
+
+					if (selectedField == "Cele meno")
+					{
+						selectedFieldMethod = &CSVElement::get_official_title;
+					}
+					else if (selectedField == "Skratene meno")
+					{
+						selectedFieldMethod = &CSVElement::get_medium_title;
+					}
+					else if (selectedField == "Kratke meno")
+					{
+						selectedFieldMethod = &CSVElement::get_short_title;
+					}
+					else if (selectedField == "Kod")
+					{
+						selectedFieldMethod = &CSVElement::get_code;
+					}
+					else {
+						selectedFieldMethod = &CSVElement::get_note;
+					}
+				}
+
+				Searcher<ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator, std::string(CSVElement::*)()> searcher;
+
+				// Zavolanie samotnej search metody
+				searcher.search<std::string, std::string>(selectedUC, myData->has_type, &CSVElement::get_UC_type,
+					ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, 
+						myData->hierarchy_current_block),
+					ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator(myData->hierarchy, nullptr));
+
+				outputList->assign(searcher.getOutput());
+
+				// Aplikovanie filtra na vyhladane UC, pokial je zadany
+				if (!search_all)
+				{
+					Searcher<ds::adt::ImplicitList<CSVElement*>::IteratorType, std::string(CSVElement::*)()> output_searcher;
+
+					output_searcher.search<std::string, std::string>(substring, selectedAlgorithmLambda, selectedFieldMethod,
+						searcher.getOutput().begin(), searcher.getOutput().end());
+
+					outputList->assign(output_searcher.getOutput());
+				}
+
+				this->writeDataToTable(outputList);
 			}
 		}
-	}
 
-}
-private: System::Void checkSelectAllUC_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	if (checkSelectAllUC->Checked)
-	{
-		cbSelectField->Enabled = false;
-		cbSearchAlgorithm->Enabled = false;
-		tbSearch->Enabled = false;
-	} else
-	{
-		cbSelectField->Enabled = true;
-		cbSearchAlgorithm->Enabled = true;
-		tbSearch->Enabled = true;
-	}
-}
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-	filtrovanie_window^ filtrovanieWindow = gcnew filtrovanie_window();
-	filtrovanieWindow->ShowDialog();
-}
+		// Pomocna metoda pre umoznenie vypisu vsetkych UC daneho typu z daneho vrcholu
+		private: System::Void checkSelectAllUC_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (checkSelectAllUC->Checked)
+			{
+				cbSelectField->Enabled = false;
+				cbSearchAlgorithm->Enabled = false;
+				tbSearch->Enabled = false;
+			} else
+			{
+				cbSelectField->Enabled = true;
+				cbSearchAlgorithm->Enabled = true;
+				tbSearch->Enabled = true;
+			}
+		}
+
+		//****************
+	    //Metody pre tab 3
+	    //****************
+
+		// Pridanie filtra
+		private: System::Void btnAddFilter_Click(System::Object^ sender, System::EventArgs^ e) {
+			filtrovanie_window^ filtrovanieWindow = gcnew filtrovanie_window();
+			filtrovanieWindow->ShowDialog();
+			if (filtrovanieWindow->DialogResult == System::Windows::Forms::DialogResult::OK)
+			{
+				Filter* given_filter = filtrovanieWindow->getFilter();
+				this->writeFilter(given_filter);
+			}
+		}
+
+		// Odstranenie filtra
+		private: System::Void btnRemoveFilter_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (lbSelectedFilters->SelectedIndex != -1)
+			{
+				delete selectedFilters->access(lbSelectedFilters->SelectedIndex);
+				selectedFilters->remove(lbSelectedFilters->SelectedIndex);
+				lbSelectedFilters->Items->RemoveAt(lbSelectedFilters->SelectedIndex);
+			}
+		}
+
+		// Odstranenie vsetkych filtrov
+		private: System::Void btnRemoveAllFilters_Click(System::Object^ sender, System::EventArgs^ e) {
+			lbSelectedFilters->Items->Clear();
+
+			for (auto element : *selectedFilters)
+			{
+				delete element;
+			}
+
+			selectedFilters->clear();
+		}
+
+		// Spustenie filtrovania
+		private: System::Void btnFilter_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (this->selectedFilters->isEmpty())
+			{
+				MessageBox::Show("Zadajte aspoň jeden filter", "Chyba", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			else
+			{
+				Searcher<ds::adt::ImplicitList<CSVElement*>::IteratorType, int(CSVElement::*)()> output_searcher;
+
+				for (Filter* filter : *selectedFilters)
+				{
+					output_searcher.search<int, Filter*>(filter, myData->compare_numeric, filter->getSelectedMethod(),
+						outputList->begin(), outputList->end());
+					outputList->assign(output_searcher.getOutput());
+					output_searcher.clear();
+				}
+
+				this->selectedFilters->clear();
+				lbSelectedFilters->Items->Clear();
+				
+
+				writeDataToTable(outputList);
+			}
+		}
+
+		//*********************
+	    //Metody pre sortovanie
+	    //*********************
+
+		// Vycistenie listview a listu so zvolenymi polozkami
+		private: System::Void btnClearListView_Click(System::Object^ sender, System::EventArgs^ e) {
+			outputList->clear();
+			lvSearchOutput->Items->Clear();
+		}
+
+		// Zoradenie hodnot v liste hodnot
+		private: System::Void btnSortListView_Click(System::Object^ sender, System::EventArgs^ e) {
+			std::function<bool(CSVElement*, CSVElement*)> selected_method;
+
+			if (cbSortAlgorithm->SelectedIndex == -1)
+			{
+				MessageBox::Show("Vyberte triediaci algoritmus", "Chyba",
+					MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			} else
+			{
+				selected_method = cbSortAlgorithm->SelectedIndex == 0 ? myData->compareAlphabetical : myData->compareVowelsCount;
+
+				ds::adt::QuickSort<CSVElement*> sorter;
+
+				// Nutna konvencia na implicitsequence, kedze sorty nemaju listy...
+				ds::amt::ImplicitSequence<CSVElement*> list;
+
+				for (auto el : *outputList)
+				{
+					list.insertLast().data_ = el;
+				}
+
+				sorter.sort(list, selected_method);
+
+				outputList->clear();
+
+				for (auto el : list)
+				{
+					outputList->insertLast(el);
+				}
+
+				writeDataToTable(outputList);
+
+			}
+		}
 };
 }

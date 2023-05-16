@@ -7,6 +7,7 @@ using namespace System::Windows::Forms;
 
 void main()
 {
+	// Spustenie heap monitora
 	initHeapMonitor();
 
 	// Spustenie GUI

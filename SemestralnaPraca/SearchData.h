@@ -1,4 +1,3 @@
-#include "Searcher.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -7,10 +6,13 @@
 #include <cwctype>
 #include <codecvt>
 #include <functional>
+
+#include "Searcher.h"
 #include <libds/amt/explicit_hierarchy.h>
 #include <libds/adt/table.h>
 #include <libds/adt/list.h>
 #include <libds/adt/sorts.h>
+#include "Filter.h"
 
 public class SearchData
 {
@@ -24,6 +26,11 @@ public:
 	ds::adt::Treap<std::string, CSVElement*> okresy_table;
 	ds::adt::Treap<std::string, CSVElement*> obce_table;
 	ds::adt::Treap<std::string, ds::adt::ImplicitList<int>*> vzdelanie_table;
+
+public:
+	// nutne pre fungovanie tolower pre specialne znaky ako je ž, š, č... Bez tohoto je kod funkcny, ale std::tolower nepremeni
+   // specialne znaky Ž, Č... na ž, č...
+	std::locale const utf8 = std::locale("sk_SK.UTF-8");
 
 	// Definicia lambda funkcii
 	std::function<bool(const std::string&, const std::string&)> search_from_beginning = [this](const std::string& element, const std::string& substring) {
@@ -51,18 +58,38 @@ public:
 		return selectedUC == elementUC;
 	};
 
+	// Lambda funkcia pouzita pri filtrovani
+	std::function<bool(const int&, const Filter*)> compare_numeric = [this](const int& value, const Filter* selectedFilter) {
+		return selectedFilter->compare(value);
+	};
 
-private:
-	// nutne pre fungovanie tolower pre specialne znaky ako je ž, š, č... Bez tohoto je kod funkcny, ale std::tolower nepremeni
-   // specialne znaky Ž, Č... na ž, č...
-	std::locale const utf8 = std::locale("en_US.UTF-8");
+	// Lambda funkcie pre sortovanie
+
+	// Pomocna funkcia pre zistenie poctu samohlasok v slove
+	int getVowelCount(std::string& str);
+
+	std::function<bool(CSVElement*, CSVElement*)> compareAlphabetical = [this](CSVElement* l, CSVElement* r) -> bool
+	{
+		const std::collate<char>& coll = std::use_facet<std::collate<char>>(utf8);
+		std::string& name_1 = l->get_official_title();
+		std::string& name_2 = r->get_official_title();
+
+		int result = coll.compare(name_1.data(), name_1.data() + name_1.length(),
+			name_2.data(), name_2.data() + name_2.length());
+
+		return result < 0;
+	};
+
+	std::function<bool(CSVElement*, CSVElement*)> compareVowelsCount = [&](CSVElement* l, CSVElement* r) -> bool
+	{
+		return getVowelCount(l->get_official_title()) > getVowelCount(r->get_official_title());
+	};
 
 public:
 	SearchData();
 	~SearchData();
 	void fill();
 	void loadCSV(const std::string& path, std::function<void(ds::adt::ImplicitList<std::string> content)> insert_function);
-	Searcher<ds::amt::MultiWayExplicitHierarchy<CSVElement*>::PreOrderHierarchyIterator, std::string(CSVElement::*)()> searcher;
 
 private:
 	std::wstring to_wstring(std::string const& s);

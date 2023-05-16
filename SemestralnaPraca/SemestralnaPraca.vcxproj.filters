@@ -18,6 +18,10 @@
     <None Include="documents\uroven 1\data\obce.csv" />
     <None Include="documents\uroven 1\data\okresy.csv" />
     <None Include="documents\uroven 1\data\kraje.csv" />
+    <None Include="documents\kraje.csv" />
+    <None Include="documents\obce.csv" />
+    <None Include="documents\okresy.csv" />
+    <None Include="documents\vzdelanie.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Searcher.h">
@@ -33,6 +37,9 @@
       <Filter>gui</Filter>
     </ClInclude>
     <ClInclude Include="filtrovanie_window.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Filter.h">
       <Filter>gui</Filter>
     </ClInclude>
   </ItemGroup>

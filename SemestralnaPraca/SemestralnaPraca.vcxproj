@@ -131,12 +131,17 @@
     <ClCompile Include="main_form.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="documents\kraje.csv" />
+    <None Include="documents\obce.csv" />
+    <None Include="documents\okresy.csv" />
     <None Include="documents\uroven 1\data\kraje.csv" />
     <None Include="documents\uroven 1\data\obce.csv" />
     <None Include="documents\uroven 1\data\okresy.csv" />
+    <None Include="documents\vzdelanie.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSVElement.h" />
+    <ClInclude Include="Filter.h" />
     <ClInclude Include="filtrovanie_window.h">
       <FileType>CppForm</FileType>
     </ClInclude>

@@ -41,14 +41,14 @@ std::vector<std::unique_ptr<ds::tests::Test>> createTests()
 	//// TODO 08
 	//adt->add_test(std::make_unique<ds::tests::PriorityQueueTest>());
 
-	//// TODO 09
+	// 09
 	adt->add_test(std::make_unique<ds::tests::SequenceTableTest>());
 
-	// TODO 11
+	// 11
 	adt->add_test(std::make_unique<ds::tests::NonSequenceTableTest>());
 
-	//// TODO 12
-	//adt->add_test(std::make_unique<ds::tests::SortTest>());
+	// 12
+	adt->add_test(std::make_unique<ds::tests::SortTest>());
 
 	root->add_test(std::move(mm));
 	root->add_test(std::move(amt));

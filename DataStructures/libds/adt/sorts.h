@@ -51,7 +51,7 @@ namespace ds::adt
         void sort(amt::ImplicitSequence<T>& is, std::function<bool(const T&, const T&)> compare) override;
 
     private:
-        void quick(amt::ImplicitSequence<T>& is, std::function<bool(const T&, const T&)> compare, size_t min, size_t max);
+        void quick(amt::ImplicitSequence<T>& is, std::function<bool(const T&, const T&)> compare, int min, int max);
     };
 
     template <typename T>
@@ -154,13 +154,13 @@ namespace ds::adt
     }
 
     template<typename T>
-    void QuickSort<T>::quick(amt::ImplicitSequence<T>& is, std::function<bool(const T&, const T&)> compare, size_t min, size_t max)
+    void QuickSort<T>::quick(amt::ImplicitSequence<T>& is, std::function<bool(const T&, const T&)> compare, int min, int max)
     {
-        size_t pivotIndex = min + (max - min) / 2;
+        int pivotIndex = min + (max - min) / 2;
         T pivot = is.access(pivotIndex)->data_;
 
-        size_t leftIndex = min;
-        size_t rightIndex = max;
+        int leftIndex = min;
+        int rightIndex = max;
 
         while (leftIndex <= rightIndex)
         {

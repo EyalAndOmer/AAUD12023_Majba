@@ -1,5 +1,6 @@
+#include <functional> 
+
 #include "CSVElement.h"
-#include <functional>  // Import pre lambdu
 
 // Prvy generic urcuje druh iteratora z udajovej struktury kde su objekty ulozene
 // Druhy generic urcuje atribut ktory porovnavame z daneho objektu v udajovej strukture
@@ -16,8 +17,8 @@ public:
 	};
 
 	// Genericka metoda na porovnanie dvoch stringov pomocou lambda funkcie. Metoda vie porovnavat attributy objektoveho typu
-	template<typename FilterAttribute>
-	void search(const FilterAttribute& filter_attribute, std::function<bool(const std::string&, const FilterAttribute&)> compare_function, Attribute attribute, Iterator& begin, Iterator& end)
+	template<typename ElementAttribute, typename FilterAttribute>
+	void search(const FilterAttribute& filter_attribute, std::function<bool(const ElementAttribute&, const FilterAttribute&)> compare_function, Attribute attribute, Iterator& begin, Iterator& end)
 	{
 
 		for (auto iter = begin; iter != end; ++iter)
